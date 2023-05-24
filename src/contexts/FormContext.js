@@ -85,12 +85,6 @@ export const FormProvider = ({ children }) => {
       if (!exisitingIds.includes(id)) {
         newItemsValues.items.push({ id });
       } else return;
-      //   itemValues.items.forEach((item) => {
-      //     console.log(item);
-      //     if (!exisitingIds.includes(id)) {
-      //       newItemsValues.items.push({ id });
-      //     } else return;
-      //   });
     });
 
     console.log(newItemsValues);
