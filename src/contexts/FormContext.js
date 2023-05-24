@@ -1,5 +1,5 @@
 // const React, {createContext, useContext} = require('react');
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const FormContext = createContext();
 
@@ -61,8 +61,7 @@ export const FormProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("ItemValues");
-    console.log(itemValues);
+    console.log('ItemValues', itemValues);
   }, [itemValues]);
 
   const handleCustomerChange = (e) => {
@@ -83,13 +82,19 @@ export const FormProvider = ({ children }) => {
     console.log(exisitingIds);
 
     ids.forEach((id) => {
-      itemValues.items.forEach((item) => {
-        console.log(item);
-        if (!exisitingIds.includes(id)) {
-          newItemsValues.items.push({ id });
-        } else return;
-      });
+      if (!exisitingIds.includes(id)) {
+        newItemsValues.items.push({ id });
+      } else return;
+      //   itemValues.items.forEach((item) => {
+      //     console.log(item);
+      //     if (!exisitingIds.includes(id)) {
+      //       newItemsValues.items.push({ id });
+      //     } else return;
+      //   });
     });
+
+    console.log(newItemsValues);
+
     // newItemsValues.items.push(objToAdd);
     setItemValues(newItemsValues);
   }, [itemsIds, itemValues]);
@@ -110,8 +115,7 @@ export const FormProvider = ({ children }) => {
         itemsIds,
         addItem,
         removeItem,
-      }}
-    >
+      }}>
       {children}
     </FormContext.Provider>
   );
