@@ -4,10 +4,13 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-  const [itemValues, setItemValues] = useState({ items: [] });
+  const initalIndex = createUniqueId();
+  const [itemValues, setItemValues] = useState({
+    items: [{ id: initalIndex }],
+  });
   const [customerValues, setCustomerValues] = useState({});
   const [price, setPrice] = useState(0);
-  const [itemsIds, setItemIds] = useState([createUniqueId()]);
+  const [itemsIds, setItemIds] = useState([initalIndex]);
 
   function createUniqueId() {
     return Math.floor(Math.random() * 100000);
@@ -22,6 +25,12 @@ export const FormProvider = ({ children }) => {
       const newArr = prev.filter((el) => el != id);
       return newArr.length >= 1 ? newArr : prev;
     });
+
+    setItemValues((prev) => {
+      const newObj = prev;
+      newObj.items = prev.items.filter((el) => el.id != id);
+      return newObj;
+    });
   };
 
   const handleItemsChange = (e, id) => {
@@ -35,7 +44,7 @@ export const FormProvider = ({ children }) => {
     //   return newState;
     // });
 
-    itemValues.forEach((item) => {
+    itemValues.items.forEach((item) => {
       if (item.id == id) {
         //update state
       } else return;
@@ -63,6 +72,31 @@ export const FormProvider = ({ children }) => {
   //     const price = categoryPrice + colorPrice + sizePrice + amountPrice;
   //     setPrice(price);
   //   };
+  useEffect(() => {
+    const ids = itemsIds;
+    const newItemsValues = itemValues;
+    //whenever there is a new ID, initialize an object into itemValues with that id
+    console.log("ItemsIds: ", itemsIds);
+    ids.forEach((id) => {
+      itemValues.items.forEach((i) => {
+        console.log("before else");
+        if (i.id != id) {
+          console.log("inside else");
+          newItemsValues.items.push({ id });
+        } else return;
+      });
+    });
+
+    console.log(newItemsValues);
+  }, [itemsIds]);
+
+  useEffect(() => {
+    console.log("ItemValues");
+    console.log(itemValues);
+  }, [itemValues]);
+  useEffect(() => {
+    console.log(itemsIds);
+  }, [itemsIds]);
 
   return (
     <FormContext.Provider

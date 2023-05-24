@@ -27,7 +27,7 @@ const Form = () => {
 
   return (
     <form className="form">
-      {itemsIds.map((el) => (
+      {itemsIds.map((el, i) => (
         <section item-index={el} key={el}>
           <div className="form__group form__group_type_product">
             <Dropdown
@@ -41,7 +41,7 @@ const Form = () => {
             <Input
               name="amount"
               label="כמות"
-              formValues={itemValues.items[0]}
+              formValues={itemValues?.items[i] || {}}
               handleChange={(event) => handleItemsChange(event, el)}
             />
 
