@@ -4,15 +4,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useForm } from "../contexts/FormContext.js";
 
-const Dropdown = ({ list, name, label }) => {
-  const { formValues, handleChange: changeEvent } = useForm();
-  const [value, setValue] = useState("");
-  const handleChange = (event) => {
-    console.log(event.target.value);
-    changeEvent(event);
-  };
+const Dropdown = ({ list, name, label, formValues, handleChange }) => {
   return (
     <Box>
       <FormControl sx={{ minWidth: 225 }}>
@@ -20,7 +13,7 @@ const Dropdown = ({ list, name, label }) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={formValues[name]}
+          value={formValues?.name || ""}
           label={label}
           onChange={handleChange}
           name={name}

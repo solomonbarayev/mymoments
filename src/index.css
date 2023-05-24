@@ -19,3 +19,4 @@ code {
 
 @import url("./blocks/form.css");
 @import url("./blocks/logo.css");
+@import '~mdb-ui-kit/css/mdb.min.css';

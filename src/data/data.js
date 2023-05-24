@@ -6,4 +6,8 @@ export const data = {
     { name: "קפוצ'ונים", price: 60 },
   ],
   sizes: ["XS", "S", "M", "L", "XL"],
+  printPrices: {
+    backPrintPrice: 20,
+    frontPrintPrice: 30,
+  },
 };

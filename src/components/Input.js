@@ -1,10 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { useForm } from "../contexts/FormContext.js";
 
-const Input = ({ name, label }) => {
-  const { formValues, handleChange } = useForm();
+const Input = ({ formValues, handleChange, name, label }) => {
   return (
     <Box
       sx={{
@@ -18,7 +16,7 @@ const Input = ({ name, label }) => {
         label={label}
         variant="outlined"
         name={name}
-        value={formValues.name}
+        value={formValues?.name}
         onChange={handleChange}
       />
     </Box>

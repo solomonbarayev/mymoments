@@ -4,18 +4,52 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-  const [formValues, setFormValues] = useState({});
+  const [itemValues, setItemValues] = useState({ items: [] });
+  const [customerValues, setCustomerValues] = useState({});
   const [price, setPrice] = useState(0);
-  const handleChange = (e) => {
-    console.log(e);
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  const [itemsIds, setItemIds] = useState([createUniqueId()]);
+
+  function createUniqueId() {
+    return Math.floor(Math.random() * 100000);
+  }
+
+  const addItem = () => {
+    setItemIds([...itemsIds, createUniqueId()]);
+  };
+
+  const removeItem = (id) => {
+    setItemIds((prev) => {
+      const newArr = prev.filter((el) => el != id);
+      return newArr.length >= 1 ? newArr : prev;
+    });
+  };
+
+  const handleItemsChange = (e, id) => {
+    //setItemValues({ ...ItemValues, [e.target.name]: e.target.value });
+
+    //loop that checks the id and only updates that object
+    // setItemValues((prevState) => {
+    //   const newState = prevState;
+    //   newState.items.push({ [e.target.name]: e.target.value });
+    //   console.log(newState);
+    //   return newState;
+    // });
+
+    itemValues.forEach((item) => {
+      if (item.id == id) {
+        //update state
+      } else return;
+    });
+  };
+
+  const handleCustomerChange = (e) => {
+    setCustomerValues({ ...customerValues, [e.target.name]: e.target.value });
   };
 
   const handleFileUpload = (e) => {
     const { name, files } = e.target;
 
     console.log(e.target);
-    setFormValues({ ...formValues, [name]: files[0] });
   };
 
   //   const caculatePrice = () => {
@@ -30,13 +64,19 @@ export const FormProvider = ({ children }) => {
   //     setPrice(price);
   //   };
 
-  useEffect(() => {
-    console.log(formValues);
-  }, [formValues]);
-
   return (
     <FormContext.Provider
-      value={{ formValues, handleChange, handleFileUpload, price }}
+      value={{
+        handleCustomerChange,
+        handleItemsChange,
+        customerValues,
+        handleFileUpload,
+        itemValues,
+        price,
+        itemsIds,
+        addItem,
+        removeItem,
+      }}
     >
       {children}
     </FormContext.Provider>
