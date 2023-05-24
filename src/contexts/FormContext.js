@@ -17,7 +17,11 @@ export const FormProvider = ({ children }) => {
   }
 
   const addItem = () => {
-    setItemIds([...itemsIds, createUniqueId()]);
+    // setItemIds([...itemsIds, createUniqueId()]);
+    setItemIds((prevState) => {
+      const newState = [...prevState, createUniqueId()];
+      return newState;
+    });
   };
 
   const removeItem = (id) => {
@@ -34,22 +38,32 @@ export const FormProvider = ({ children }) => {
   };
 
   const handleItemsChange = (e, id) => {
-    //setItemValues({ ...ItemValues, [e.target.name]: e.target.value });
-
-    //loop that checks the id and only updates that object
-    // setItemValues((prevState) => {
-    //   const newState = prevState;
-    //   newState.items.push({ [e.target.name]: e.target.value });
-    //   console.log(newState);
-    //   return newState;
+    // const newState = itemValues;
+    // itemValues.items.forEach((item) => {
+    //   if (item.id == id) {
+    //     //update state
+    //     item[e.target.name] = e.target.value;
+    //   } else return;
     // });
 
-    itemValues.items.forEach((item) => {
-      if (item.id == id) {
-        //update state
-      } else return;
+    // console.log(newState);
+    // setItemValues(newState);
+
+    setItemValues((prevState) => {
+      const newState = prevState;
+      newState.items.forEach((item) => {
+        if (item.id == id) {
+          item[e.target.name] = e.target.value;
+        }
+      });
+      return newState;
     });
   };
+
+  useEffect(() => {
+    console.log("ItemValues");
+    console.log(itemValues);
+  }, [itemValues]);
 
   const handleCustomerChange = (e) => {
     setCustomerValues({ ...customerValues, [e.target.name]: e.target.value });
@@ -61,39 +75,25 @@ export const FormProvider = ({ children }) => {
     console.log(e.target);
   };
 
-  //   const caculatePrice = () => {
-  //     const { category, color, size, amount } = formValues;
-  //     const categoryPrice = data.categories.find(
-  //       (cat) => cat.name === category
-  //     ).price;
-  //     const colorPrice = data.colors.find((col) => col.name === color).price;
-  //     const sizePrice = data.sizes.find((siz) => siz.name === size).price;
-  //     const amountPrice = amount * 10;
-  //     const price = categoryPrice + colorPrice + sizePrice + amountPrice;
-  //     setPrice(price);
-  //   };
   useEffect(() => {
     const ids = itemsIds;
     const newItemsValues = itemValues;
     //whenever there is a new ID, initialize an object into itemValues with that id
-    console.log("ItemsIds: ", itemsIds);
+    const exisitingIds = itemValues.items.map((el) => el.id);
+    console.log(exisitingIds);
+
     ids.forEach((id) => {
-      itemValues.items.forEach((i) => {
-        console.log("before else");
-        if (i.id != id) {
-          console.log("inside else");
+      itemValues.items.forEach((item) => {
+        console.log(item);
+        if (!exisitingIds.includes(id)) {
           newItemsValues.items.push({ id });
         } else return;
       });
     });
+    // newItemsValues.items.push(objToAdd);
+    setItemValues(newItemsValues);
+  }, [itemsIds, itemValues]);
 
-    console.log(newItemsValues);
-  }, [itemsIds]);
-
-  useEffect(() => {
-    console.log("ItemValues");
-    console.log(itemValues);
-  }, [itemValues]);
   useEffect(() => {
     console.log(itemsIds);
   }, [itemsIds]);

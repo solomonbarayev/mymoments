@@ -41,7 +41,7 @@ const Form = () => {
             <Input
               name="amount"
               label="כמות"
-              formValues={itemValues?.items[i] || {}}
+              formValues={itemValues?.items[i]}
               handleChange={(event) => handleItemsChange(event, el)}
             />
 
