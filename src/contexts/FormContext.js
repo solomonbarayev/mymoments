@@ -5,9 +5,9 @@ import React, {
   useState,
   useEffect,
   useReducer,
-} from "react";
-import { data } from "../data/data";
-import reducer from "../reducers/reducer";
+} from 'react';
+import { data } from '../data/data';
+import reducer from '../reducers/reducer';
 
 const FormContext = createContext();
 
@@ -27,43 +27,35 @@ const initialState = {
 export const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { itemsIds } = state;
+  const { itemsIds, items: itemValues, totalPrice } = state;
   console.log(state);
 
-  const [itemValues, setItemValues] = useState([{ id: initalIndex }]);
+  // const [itemValues, setItemValues] = useState([{ id: initalIndex }]);
   const [customerValues, setCustomerValues] = useState({});
   const [price, setPrice] = useState(0);
   // const [itemsIds, setItemIds] = useState([createUniqueId()]);
-  const [totalPrice, setTotalPrice] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
 
   const addItem = () => {
-    // setItemIds((prevState) => {
-    //   const newState = [...prevState, createUniqueId()];
-    //   return newState;
-    // });
-    dispatch({ type: "ADD_ITEM", payload: createUniqueId() });
+    dispatch({ type: 'ADD_ITEM', payload: createUniqueId() });
   };
-
-  useEffect(() => {});
 
   const removeItem = (id) => {
-    dispatch({ type: "REMOVE_ITEM", payload: id });
+    dispatch({ type: 'REMOVE_ITEM', payload: id });
   };
+
   const handleItemsChange = (e, id) => {
-    setItemValues((prevState) => {
-      const newState = prevState;
-      newState.forEach((item) => {
-        if (item.id == id) {
-          item[e.target.name] = e.target.value;
-          console.log("items updated");
-        }
-      });
-      return newState;
+    dispatch({
+      type: 'UPDATE_ITEM',
+      payload: { id, name: e.target.name, value: e.target.value },
     });
   };
 
   const handleCustomerChange = (e) => {
-    setCustomerValues({ ...customerValues, [e.target.name]: e.target.value });
+    dispatch({
+      type: 'UPDATE_CUSTOMER',
+      payload: { name: e.target.name, value: e.target.value },
+    });
   };
 
   const handleFileUpload = (e) => {
@@ -81,31 +73,11 @@ export const FormProvider = ({ children }) => {
         newItemsValues.push({ id });
       } else return;
     });
-    // newItemsValues.push(objToAdd);
-    setItemValues(newItemsValues);
   }, [itemsIds, itemValues]);
 
-  function calculateFinalPrice() {
-    let newTotalPrice = 0;
-    itemValues.forEach((item) => {
-      console.log(item.category);
-      if (item.category != undefined) {
-        console.log("inside");
-        const itemPrice = data.categories.filter(
-          (cat) => cat.name == item.category
-        )[0].price;
-        newTotalPrice += itemPrice * item.amount;
-        return newTotalPrice;
-      }
-    });
-
-    // setTotalPrice(newTotalPrice);
-  }
-
   useEffect(() => {
-    //calculateFinalPrice();
-    console.log(itemValues);
-  }, [JSON.stringify(itemValues)]);
+    dispatch({ type: 'CALCULATE_PRICE' });
+  }, [itemValues]);
 
   return (
     <FormContext.Provider
@@ -120,8 +92,7 @@ export const FormProvider = ({ children }) => {
         addItem,
         removeItem,
         totalPrice,
-      }}
-    >
+      }}>
       {children}
     </FormContext.Provider>
   );
