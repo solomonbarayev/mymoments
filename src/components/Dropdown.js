@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-const Dropdown = ({ list, name, label, formValues, handleChange }) => {
+const Dropdown = ({ list, name, label, formValues, value, handleChange }) => {
   return (
     <Box>
       <FormControl sx={{ minWidth: 225 }}>
@@ -13,10 +13,13 @@ const Dropdown = ({ list, name, label, formValues, handleChange }) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={formValues?.name || ""}
+          value={formValues}
+          // value="hello"
+          //svalue={value}
           label={label}
           onChange={handleChange}
           name={name}
+          defaultValue=""
         >
           {list.map((listItem, i) => (
             <MenuItem key={i} value={listItem}>

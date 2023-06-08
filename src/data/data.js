@@ -8,6 +8,5 @@ export const data = {
   sizes: ["XS", "S", "M", "L", "XL"],
   printPrices: {
     backPrintPrice: 20,
-    frontPrintPrice: 30,
   },
 };

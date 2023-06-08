@@ -1,68 +1,66 @@
 // const React, {createContext, useContext} = require('react');
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useReducer,
+} from "react";
+import { data } from "../data/data";
+import reducer from "../reducers/reducer";
 
 const FormContext = createContext();
 
+function createUniqueId() {
+  return Math.floor(Math.random() * 100000);
+}
+
+const initalIndex = createUniqueId();
+
+const initialState = {
+  items: [],
+  itemsIds: [initalIndex],
+  customerData: false,
+  totalPrice: 0,
+};
+
 export const FormProvider = ({ children }) => {
-  const initalIndex = createUniqueId();
-  const [itemValues, setItemValues] = useState({
-    items: [{ id: initalIndex }],
-  });
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { itemsIds } = state;
+  console.log(state);
+
+  const [itemValues, setItemValues] = useState([{ id: initalIndex }]);
   const [customerValues, setCustomerValues] = useState({});
   const [price, setPrice] = useState(0);
-  const [itemsIds, setItemIds] = useState([initalIndex]);
-
-  function createUniqueId() {
-    return Math.floor(Math.random() * 100000);
-  }
+  // const [itemsIds, setItemIds] = useState([createUniqueId()]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const addItem = () => {
-    // setItemIds([...itemsIds, createUniqueId()]);
-    setItemIds((prevState) => {
-      const newState = [...prevState, createUniqueId()];
-      return newState;
-    });
+    // setItemIds((prevState) => {
+    //   const newState = [...prevState, createUniqueId()];
+    //   return newState;
+    // });
+    dispatch({ type: "ADD_ITEM", payload: createUniqueId() });
   };
+
+  useEffect(() => {});
 
   const removeItem = (id) => {
-    setItemIds((prev) => {
-      const newArr = prev.filter((el) => el != id);
-      return newArr.length >= 1 ? newArr : prev;
-    });
-
-    setItemValues((prev) => {
-      const newObj = prev;
-      newObj.items = prev.items.filter((el) => el.id != id);
-      return newObj;
-    });
+    dispatch({ type: "REMOVE_ITEM", payload: id });
   };
-
   const handleItemsChange = (e, id) => {
-    // const newState = itemValues;
-    // itemValues.items.forEach((item) => {
-    //   if (item.id == id) {
-    //     //update state
-    //     item[e.target.name] = e.target.value;
-    //   } else return;
-    // });
-
-    // console.log(newState);
-    // setItemValues(newState);
-
     setItemValues((prevState) => {
       const newState = prevState;
-      newState.items.forEach((item) => {
+      newState.forEach((item) => {
         if (item.id == id) {
           item[e.target.name] = e.target.value;
+          console.log("items updated");
         }
       });
       return newState;
     });
   };
-
-  useEffect(() => {
-    console.log('ItemValues', itemValues);
-  }, [itemValues]);
 
   const handleCustomerChange = (e) => {
     setCustomerValues({ ...customerValues, [e.target.name]: e.target.value });
@@ -70,7 +68,6 @@ export const FormProvider = ({ children }) => {
 
   const handleFileUpload = (e) => {
     const { name, files } = e.target;
-
     console.log(e.target);
   };
 
@@ -78,24 +75,37 @@ export const FormProvider = ({ children }) => {
     const ids = itemsIds;
     const newItemsValues = itemValues;
     //whenever there is a new ID, initialize an object into itemValues with that id
-    const exisitingIds = itemValues.items.map((el) => el.id);
-    console.log(exisitingIds);
-
+    const exisitingIds = itemValues.map((el) => el.id);
     ids.forEach((id) => {
       if (!exisitingIds.includes(id)) {
-        newItemsValues.items.push({ id });
+        newItemsValues.push({ id });
       } else return;
     });
-
-    console.log(newItemsValues);
-
-    // newItemsValues.items.push(objToAdd);
+    // newItemsValues.push(objToAdd);
     setItemValues(newItemsValues);
   }, [itemsIds, itemValues]);
 
+  function calculateFinalPrice() {
+    let newTotalPrice = 0;
+    itemValues.forEach((item) => {
+      console.log(item.category);
+      if (item.category != undefined) {
+        console.log("inside");
+        const itemPrice = data.categories.filter(
+          (cat) => cat.name == item.category
+        )[0].price;
+        newTotalPrice += itemPrice * item.amount;
+        return newTotalPrice;
+      }
+    });
+
+    // setTotalPrice(newTotalPrice);
+  }
+
   useEffect(() => {
-    console.log(itemsIds);
-  }, [itemsIds]);
+    //calculateFinalPrice();
+    console.log(itemValues);
+  }, [JSON.stringify(itemValues)]);
 
   return (
     <FormContext.Provider
@@ -109,7 +119,9 @@ export const FormProvider = ({ children }) => {
         itemsIds,
         addItem,
         removeItem,
-      }}>
+        totalPrice,
+      }}
+    >
       {children}
     </FormContext.Provider>
   );

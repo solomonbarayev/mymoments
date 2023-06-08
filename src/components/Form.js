@@ -23,6 +23,7 @@ const Form = () => {
     itemsIds,
     addItem,
     removeItem,
+    totalPrice,
   } = useForm();
 
   return (
@@ -34,14 +35,14 @@ const Form = () => {
               list={categories}
               name="category"
               label="סוג חולצה"
-              formValues={itemValues}
+              formValues={itemValues[i].category}
               handleChange={(e) => handleItemsChange(e, el)}
             />
 
             <Input
               name="amount"
               label="כמות"
-              formValues={itemValues?.items[i]}
+              formValues={itemValues[i].amount}
               handleChange={(event) => handleItemsChange(event, el)}
             />
 
@@ -49,14 +50,14 @@ const Form = () => {
               list={colors}
               name="color"
               label="צבע"
-              formValues={itemValues}
+              formValues={itemValues[i].color}
               handleChange={(event) => handleItemsChange(event, el)}
             />
             <Dropdown
               list={sizes}
               name="size"
               label="מידה"
-              formValues={itemValues}
+              formValues={itemValues[i].size}
               handleChange={(event) => handleItemsChange(event, el)}
             />
           </div>
@@ -113,6 +114,8 @@ const Form = () => {
           handleChange={handleCustomerChange}
         />
       </div>
+
+      <p>{totalPrice}</p>
 
       <button type="submit">שלח</button>
     </form>
