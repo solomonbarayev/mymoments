@@ -45,11 +45,11 @@ const reducer = (state, action) => {
   if (action.type === 'CALCULATE_PRICE') {
     let newTotalPrice = 0;
     state.items.forEach((item) => {
-      if (item.category != undefined) {
+      if (item.category !== undefined) {
         const itemPrice = data.categories.filter(
           (cat) => cat.name === item.category
         )[0].price;
-        newTotalPrice += itemPrice * item.amount;
+        newTotalPrice += item.amount ? itemPrice * item.amount : 0;
       }
     });
     const newState = {
