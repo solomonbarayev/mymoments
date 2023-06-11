@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import Dropdown from './Dropdown.js';
-import { data } from '../data/data.js';
-import Input from './Input.js';
-import { useForm } from '../contexts/FormContext.js';
-import FileUpload from './FileUpload.js';
+import React, { useState, useEffect } from "react";
+import Dropdown from "./Dropdown.js";
+import { data } from "../data/data.js";
+import Input from "./Input.js";
+import { useForm } from "../contexts/FormContext.js";
+import FileUpload from "./FileUpload.js";
 
 // const cats = data.categories;
 let { categories: cats, colors: cols, sizes: siz } = data;
@@ -23,6 +23,8 @@ const Form = () => {
     addItem,
     removeItem,
     totalPrice,
+    isTelError,
+    telValidationMess,
   } = useForm();
 
   return (
@@ -67,7 +69,8 @@ const Form = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => removeItem(el)}>
+            onClick={() => removeItem(el)}
+          >
             מחק הדפסה
           </button>
         </section>
@@ -75,7 +78,8 @@ const Form = () => {
       <button
         type="button"
         className="btn btn-primary"
-        onClick={() => addItem()}>
+        onClick={() => addItem()}
+      >
         הוסף הדפסה
       </button>
       <input name="price" label="מחיר" disabled={true} />
@@ -100,12 +104,17 @@ const Form = () => {
         />
         <Input
           name="phone"
+          maxlength="14"
           label="טלפון"
           formValues={customerValues}
           handleChange={handleCustomerChange}
         />
+        <span className="form__validation-mess">
+          {isTelError ? telValidationMess : null}
+        </span>
         <Input
           name="email"
+          type="email"
           label="אימייל"
           formValues={customerValues}
           handleChange={handleCustomerChange}

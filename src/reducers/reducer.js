@@ -1,7 +1,7 @@
-import { data } from '../data/data';
+import { data } from "../data/data";
 
 const reducer = (state, action) => {
-  if (action.type === 'ADD_ITEM') {
+  if (action.type === "ADD_ITEM") {
     const newState = {
       ...state,
       itemsIds: [...state.itemsIds, action.payload],
@@ -9,15 +9,16 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'REMOVE_ITEM') {
+  if (action.type === "REMOVE_ITEM") {
     const newState = {
       ...state,
       itemsIds: state.itemsIds.filter((id) => id !== action.payload),
+      items: state.items.filter((item) => item.id !== action.payload),
     };
     return newState;
   }
 
-  if (action.type === 'UPDATE_ITEM') {
+  if (action.type === "UPDATE_ITEM") {
     //only update the item that was changed
     const newState = {
       ...state,
@@ -31,7 +32,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'UPDATE_CUSTOMER') {
+  if (action.type === "UPDATE_CUSTOMER") {
     const newState = {
       ...state,
       customerData: {
@@ -42,7 +43,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'CALCULATE_PRICE') {
+  if (action.type === "CALCULATE_PRICE") {
     let newTotalPrice = 0;
     state.items.forEach((item) => {
       if (item.category !== undefined) {
@@ -58,7 +59,7 @@ const reducer = (state, action) => {
     };
     return newState;
   } else {
-    throw new Error('No matching action type so GTFO');
+    throw new Error("No matching action type so GTFO");
   }
 };
 

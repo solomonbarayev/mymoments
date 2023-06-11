@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-const Input = ({ formValues, handleChange, name, label }) => {
+const Input = ({ formValues, handleChange, name, label, type }) => {
   return (
     <Box
       sx={{
@@ -18,6 +18,7 @@ const Input = ({ formValues, handleChange, name, label }) => {
         name={name}
         value={formValues?.name}
         onChange={handleChange}
+        type={type ? type : "text"}
       />
     </Box>
   );
