@@ -4,7 +4,7 @@
   gap: 3em;
 }
 
-.form__product {
+.form__section {
   margin: 0 auto;
   max-width: 800px;
   width: 100%;
@@ -16,6 +16,10 @@
   gap: 10px;
   border-radius: 10px;
   background-color: #fff;
+}
+
+.form__section_type_product .MuiTextField-root {
+  max-width: 225px;
 }
 
 .form__product-title {
@@ -31,7 +35,12 @@
 
 .form__dropdowns {
   display: flex;
-  gap: 2em;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.form__price-container {
+  text-align: center;
 }
 
 .form__price {
@@ -65,4 +74,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.form__group_type_customer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.form__input {
+  display: flex;
+  flex-direction: column;
 }

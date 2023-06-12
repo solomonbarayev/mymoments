@@ -32,7 +32,11 @@ const Form = () => {
   return (
     <form className="form">
       {itemsIds.map((el, i) => (
-        <section item-index={el} key={el} className="form__product">
+        <section
+          item-index={el}
+          key={el}
+          className="form__section form__section_type_product"
+        >
           <h2 className="form__product-title">הדפסה {i + 1}</h2>
           <div className="form__group">
             <div className="form__dropdowns">
@@ -85,50 +89,57 @@ const Form = () => {
       >
         הוסף הדפסה <AiOutlinePlusCircle />
       </button>
-      <div className="form__group form__group_type_customer">
-        <Input
-          name="firstName"
-          label="שם פרטי"
-          formValues={customerValues}
-          handleChange={handleCustomerChange}
-        />
-        <Input
-          name="lastName"
-          label="שם משפחה"
-          formValues={customerValues}
-          handleChange={handleCustomerChange}
-        />
-        <Input
-          name="address"
-          label="כתובת למשלוח"
-          formValues={customerValues}
-          handleChange={handleCustomerChange}
-        />
-        <Input
-          name="phone"
-          maxlength="14"
-          label="טלפון"
-          formValues={customerValues}
-          handleChange={handleCustomerChange}
-        />
-        <span className="form__validation-mess">
-          {isTelError ? telValidationMess : null}
-        </span>
-        <Input
-          name="email"
-          type="email"
-          label="אימייל"
-          formValues={customerValues}
-          handleChange={handleCustomerChange}
-        />
-      </div>
-
       <div className="form__price-container">
         <p className="form__price">
           <span className="form__price-label">מחיר סופי: &#8362;</span>
           {totalPrice}
         </p>
       </div>
+      <section className="form__section form__section_type_customer">
+        <h2 className="form__product-title">פרטי לקוח</h2>
+        <div className="form__group form__group_type_customer">
+          <Input
+            name="firstName"
+            label="שם פרטי"
+            formValues={customerValues}
+            handleChange={handleCustomerChange}
+          />
+          <Input
+            name="lastName"
+            label="שם משפחה"
+            formValues={customerValues}
+            handleChange={handleCustomerChange}
+          />
+          <Input
+            name="address"
+            label="כתובת למשלוח"
+            formValues={customerValues}
+            handleChange={handleCustomerChange}
+          />
+          <Input
+            name="city"
+            label="עיר מגורים"
+            formValues={customerValues}
+            handleChange={handleCustomerChange}
+          />
+          <Input
+            name="phone"
+            maxlength="14"
+            label="טלפון"
+            formValues={customerValues}
+            handleChange={handleCustomerChange}
+            validationMessage={"..."}
+          />
+          <Input
+            name="email"
+            type="email"
+            label="אימייל"
+            formValues={customerValues}
+            handleChange={handleCustomerChange}
+          />
+        </div>
+      </section>
+
       <button type="submit">שלח</button>
     </form>
   );

@@ -96,6 +96,7 @@ export const FormProvider = ({ children }) => {
       firstName: handleRequired,
       lastName: handleRequired,
       address: handleRequired,
+      city: handleRequired,
       email: handleRequired,
     };
     validationObject[name]?.(e);
