@@ -3,3 +3,66 @@
   flex-direction: column;
   gap: 3em;
 }
+
+.form__product {
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 20px 35px 35px;
+  /* background-color: pink; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.form__product-title {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.form__dropdowns {
+  display: flex;
+  gap: 2em;
+}
+
+.form__price {
+  /* font-weight: 600; */
+  font-size: 2em;
+}
+
+.form__price-label {
+  font-weight: 600;
+}
+
+.form__add-btn {
+  /* margin-top: 2em; */
+  max-width: 200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form__remove-item-btn {
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  max-width: 75px;
+  background-color: rgb(218, 69, 69);
+  /* padding: 10px; */
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

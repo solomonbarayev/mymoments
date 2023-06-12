@@ -13,9 +13,7 @@ const Dropdown = ({ list, name, label, formValues, value, handleChange }) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={formValues}
-          // value="hello"
-          //svalue={value}
+          value={formValues == undefined ? "" : formValues}
           label={label}
           onChange={handleChange}
           name={name}

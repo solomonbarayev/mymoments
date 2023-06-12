@@ -6,7 +6,7 @@ const Input = ({ formValues, handleChange, name, label, type }) => {
   return (
     <Box
       sx={{
-        "& > :not(style)": { m: 1, width: "25ch" },
+        "& > :not(style)": { m: 0, width: "26ch" },
       }}
       noValidate
       autoComplete="off"
