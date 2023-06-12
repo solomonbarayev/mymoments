@@ -73,13 +73,15 @@ const Form = () => {
             <FileUpload name="image1" label="הדפס קידמי" />
             <FileUpload name="image2" label="הדפס אחורי" />
           </div>
-          <button
-            type="button"
-            className="form__remove-item-btn"
-            onClick={() => removeItem(el)}
-          >
-            <BsFillTrash3Fill />
-          </button>
+          {itemsIds.length == 1 ? null : (
+            <button
+              type="button"
+              className="form__remove-item-btn"
+              onClick={() => removeItem(el)}
+            >
+              <BsFillTrash3Fill />
+            </button>
+          )}
         </section>
       ))}
       <button

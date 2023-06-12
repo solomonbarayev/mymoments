@@ -10,11 +10,14 @@ const reducer = (state, action) => {
   }
 
   if (action.type === "REMOVE_ITEM") {
-    const newState = {
-      ...state,
-      itemsIds: state.itemsIds.filter((id) => id !== action.payload),
-      items: state.items.filter((item) => item.id !== action.payload),
-    };
+    const newState =
+      state.itemsIds.length > 1
+        ? {
+            ...state,
+            itemsIds: state.itemsIds.filter((id) => id !== action.payload),
+            items: state.items.filter((item) => item.id !== action.payload),
+          }
+        : state;
     return newState;
   }
 
