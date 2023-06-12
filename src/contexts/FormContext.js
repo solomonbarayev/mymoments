@@ -34,6 +34,16 @@ export const FormProvider = ({ children }) => {
     lastName: "",
     email: "",
     address: "",
+    city: "",
+  });
+
+  const [errMessages, setErrMessages] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    city: "",
+    phone: "",
   });
 
   const {
@@ -59,17 +69,25 @@ export const FormProvider = ({ children }) => {
 
   const handleTelErr = (e) => {
     let num = e.target.value.replaceAll("-", "");
+    if (num == "") {
+      setErrMessages({
+        phone: "שדה חובה",
+      });
+    }
     if (!validateTel.test(num)) {
-      setTelValidationMess("מספרים בלבד");
-      setIsTelError(true);
+      setErrMessages({
+        phone: "מספרים בלבד",
+      });
       return;
     } else if (num.length != 10) {
-      setTelValidationMess("לפחות עשר מספרים");
-      setIsTelError(true);
+      setErrMessages({
+        phone: "לפחות עשר מספרים",
+      });
       return;
     }
-    setIsTelError(false);
-    setTelValidationMess("");
+    setErrMessages({
+      phone: "",
+    });
   };
 
   const handleItemsChange = (e, id) => {
@@ -80,13 +98,12 @@ export const FormProvider = ({ children }) => {
   };
 
   const handleRequired = (e) => {
-    let newState = requiredMessages;
+    let newState = errMessages;
 
     if (e.target.value == "") {
-      newState[e.target.name] = "can't be empty";
+      newState[e.target.name] = "שדה חובה";
     }
-
-    setRequiredMessages(newState);
+    setErrMessages(newState);
   };
 
   const handleValidations = (e) => {
