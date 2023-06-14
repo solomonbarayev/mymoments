@@ -15,8 +15,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border-radius: 10px;
+  border-radius: 4px;
   background-color: #fff;
+  text-align: right;
+}
+
+.form__section_type_customer {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .form__section_type_product .MuiTextField-root {
@@ -26,6 +31,20 @@
 .form__product-title {
   font-size: 1.3em;
   font-weight: bold;
+}
+
+.form__products-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form__accordion {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 10px;
 }
 
 .form__group {
@@ -87,7 +106,7 @@
   flex-direction: column;
 }
 
-.MuiPaper-root{
+.MuiPaper-root {
   max-width: 800px;
   display: flex;
   flex-direction: column;
@@ -97,7 +116,7 @@
   margin: 0 auto;
 }
 
-.MuiCollapse-entered{
+.MuiCollapse-entered {
   display: flex;
   flex-direction: column;
   align-items: center;
