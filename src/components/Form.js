@@ -10,7 +10,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-//import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Dropzone from "./Dropzone.js";
+
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 // const cats = data.categories;
 let { categories: cats, colors: cols, sizes: siz } = data;
@@ -51,7 +53,7 @@ const Form = () => {
               onClick={() => setExpanded(i)}
             >
               <AccordionSummary
-                //expandIcon={<ExpandMoreIcon />}
+                // expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 sx={{
@@ -61,71 +63,77 @@ const Form = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  alignContent: "center",
                 }}
               >
                 <Typography
                   sx={{
-                    margin: "0 auto",
+                    marginLeft: "auto",
                     fontSize: "1.1em",
                     fontWeight: "bold",
+                    padding: "0 30px",
+                    lineHeight: "1.7em",
                   }}
                 >
                   הדפסה {i + 1}
                 </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  <section
-                    item-index={el}
-                    key={el}
-                    className="form__section form__section_type_product"
+                {itemsIds.length == 1 ? null : (
+                  <button
+                    type="button"
+                    className="form__remove-item-btn"
+                    onClick={() => removeItem(el)}
                   >
-                    <div className="form__group">
-                      <div className="form__dropdowns">
-                        <Dropdown
-                          list={categories}
-                          name="category"
-                          label="סוג חולצה"
-                          formValues={itemValues[i]?.category}
-                          handleChange={(e) => handleItemsChange(e, el)}
-                        />
-                        <Dropdown
-                          list={colors}
-                          name="color"
-                          label="צבע"
-                          formValues={itemValues[i]?.color}
-                          handleChange={(event) => handleItemsChange(event, el)}
-                        />
-                        <Dropdown
-                          list={sizes}
-                          name="size"
-                          label="מידה"
-                          formValues={itemValues[i]?.size}
-                          handleChange={(event) => handleItemsChange(event, el)}
-                        />
-                      </div>
-                      <Input
-                        name="amount"
-                        label="כמות"
-                        formValues={itemValues[i]?.amount}
+                    <BsFillTrash3Fill />
+                  </button>
+                )}
+              </AccordionSummary>
+              <AccordionDetails
+                sx={{
+                  padding: "0",
+                }}
+              >
+                <Dropzone />
+                {/* <section
+                  item-index={el}
+                  key={el}
+                  className="form__section form__section_type_product"
+                >
+                  <div className="form__group">
+                    <div className="form__dropdowns">
+                      <Dropdown
+                        list={categories}
+                        name="category"
+                        label="סוג חולצה"
+                        formValues={itemValues[i]?.category}
+                        handleChange={(e) => handleItemsChange(e, el)}
+                      />
+                      <Dropdown
+                        list={colors}
+                        name="color"
+                        label="צבע"
+                        formValues={itemValues[i]?.color}
+                        handleChange={(event) => handleItemsChange(event, el)}
+                      />
+                      <Dropdown
+                        list={sizes}
+                        name="size"
+                        label="מידה"
+                        formValues={itemValues[i]?.size}
                         handleChange={(event) => handleItemsChange(event, el)}
                       />
                     </div>
-                    <div className="form__group form__group_type_images">
-                      <FileUpload name="image1" label="הדפס קידמי" />
-                      <FileUpload name="image2" label="הדפס אחורי" />
-                    </div>
-                    {itemsIds.length == 1 ? null : (
-                      <button
-                        type="button"
-                        className="form__remove-item-btn"
-                        onClick={() => removeItem(el)}
-                      >
-                        <BsFillTrash3Fill />
-                      </button>
-                    )}
-                  </section>
-                </Typography>
+                    <Input
+                      name="amount"
+                      label="כמות"
+                      formValues={itemValues[i]?.amount}
+                      handleChange={(event) => handleItemsChange(event, el)}
+                    />
+                  </div>
+                  <div className="form__group form__group_type_images">
+                    <FileUpload name="image1" label="הדפס קידמי" />
+                    <FileUpload name="image2" label="הדפס אחורי" />
+                  </div>
+                </section> */}
               </AccordionDetails>
             </Accordion>
           </div>
@@ -188,7 +196,6 @@ const Form = () => {
           />
         </div>
       </section>
-
       <button type="submit">שלח</button>
     </form>
   );
