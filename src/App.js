@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <header className="logo-container">
         <img src={logo} alt="logo" className="logo" />
-        <h1 className="header">בחר את המוצר שלך</h1>
+        <h1 className="header">צור את ההדפסה שלך</h1>
       </header>
       <Form />
     </div>

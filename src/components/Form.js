@@ -10,8 +10,8 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import AntDropzone from "../imported-components/AntDropzone.js";
-import Dropzone from "./Dropzone.js";
+import AntDropzone from "./AntDropzone.js";
+import ToggleButtons from "./ToggleButtons.js";
 
 let { categories: cats, colors: cols, sizes: siz } = data;
 cats = cats.map((cat) => cat.name);
@@ -86,15 +86,11 @@ const Form = () => {
                 )}
               </AccordionSummary>
 
-              <AccordionDetails
-                sx={
-                  {
-                    //padding: "0",
-                  }
-                }
-              >
-                {/* <Dropzone /> */}
-                <AntDropzone />
+              <AccordionDetails>
+                <section className="form__print-container">
+                  <ToggleButtons />
+                  <AntDropzone />
+                </section>
                 {/* <section
                   item-index={el}
                   key={el}
