@@ -10,11 +10,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
+import AntDropzone from "../imported-components/AntDropzone.js";
 import Dropzone from "./Dropzone.js";
 
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-// const cats = data.categories;
 let { categories: cats, colors: cols, sizes: siz } = data;
 cats = cats.map((cat) => cat.name);
 
@@ -87,12 +85,16 @@ const Form = () => {
                   </button>
                 )}
               </AccordionSummary>
+
               <AccordionDetails
-                sx={{
-                  padding: "0",
-                }}
+                sx={
+                  {
+                    //padding: "0",
+                  }
+                }
               >
-                <Dropzone />
+                {/* <Dropzone /> */}
+                <AntDropzone />
                 {/* <section
                   item-index={el}
                   key={el}

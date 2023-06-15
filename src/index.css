@@ -1,3 +1,7 @@
+@import url("./blocks/form.css");
+@import url("./blocks/logo.css");
+@import "~mdb-ui-kit/css/mdb.min.css";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -18,6 +22,9 @@ code {
   text-align: center;
 }
 
-@import url("./blocks/form.css");
-@import url("./blocks/logo.css");
-@import "~mdb-ui-kit/css/mdb.min.css";
+
+
+
+.MuiCollapse-root.MuiCollapse-vertical{
+  width: 100%!important;
+}
