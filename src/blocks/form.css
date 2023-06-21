@@ -107,32 +107,38 @@
   flex-direction: column;
 }
 
-.form__toggle{
+.form__toggle {
   direction: ltr;
 }
 
-.form__print-container{
+.form__print-container {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2em;
+}
+
+.form__category-buttons {
+  display: flex;
   gap: 1em;
+  flex-wrap: wrap;
+  width: 100%;
   flex-basis: auto;
+  justify-content: space-between;
 }
 
-.MuiPaper-root {
-  max-width: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* padding: 20px 35px 35px; */
-  /* gap: 10px; */
-  margin: 0 auto;
+.form__button_type_category {
+  width: calc((100% / 3) - 0.7em);
+  /* super light gray border */
+  border: 1px solid #e0e0e0;
+  padding: 3em;
+  background-color: transparent;
+  border-radius: 10px;
 }
 
-.MuiCollapse-entered {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
+.form__title_type_h2 {
+  font-size: 1.3em;
+  /* font-weight: bold; */
+  text-align: center;
 }

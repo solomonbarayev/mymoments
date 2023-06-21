@@ -24,6 +24,7 @@ const ToggleButtons = (props) => {
     >
       <ToggleButton value="front">הדפס קדימה</ToggleButton>
       <ToggleButton value="back">הדפס אחורה</ToggleButton>
+      <ToggleButton value="exclude">ללא הדפס</ToggleButton>
     </ToggleButtonGroup>
   );
 };

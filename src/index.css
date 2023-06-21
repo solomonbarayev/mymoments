@@ -3,6 +3,7 @@
 @import "~mdb-ui-kit/css/mdb.min.css";
 @import url("./blocks/MUIoverrides.css");
 @import url("./blocks/ANTdesignoverrides.css");
+@import url("./blocks/swiper.css");
 
 body {
   margin: 0;
@@ -23,7 +24,3 @@ code {
 .header {
   text-align: center;
 }
-
-
-
-

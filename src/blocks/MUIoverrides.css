@@ -1,3 +1,20 @@
-.MuiCollapse-root.MuiCollapse-vertical{
-    width: 100%!important;
-  }
+.MuiCollapse-root.MuiCollapse-vertical {
+  width: 100% !important;
+}
+
+.MuiPaper-root {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* padding: 20px 35px 35px; */
+  /* gap: 10px; */
+  margin: 0 auto;
+}
+
+.MuiCollapse-entered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
