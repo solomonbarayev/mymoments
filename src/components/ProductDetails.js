@@ -8,7 +8,6 @@ const ProductDetails = () => {
     <section className="form__print-container">
       <CategoryPicker />
       <>
-        <ToggleButtons />
         <AntDropzone />
       </>
 

@@ -4,6 +4,9 @@ export const data = {
     { name: "חולצות", price: 40 },
     { name: "גקטים", price: 50 },
     { name: "קפוצ'ונים", price: 60 },
+    { name: "מגבות", price: 40 },
+    { name: "סינרים", price: 50 },
+    { name: "עטים", price: 60 },
   ],
   sizes: ["XS", "S", "M", "L", "XL"],
   printPrices: {
