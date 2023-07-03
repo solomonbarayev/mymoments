@@ -20,6 +20,7 @@ const initialState = {
   items: [],
   itemsIds: [initalIndex],
   customerData: {},
+  shipping: false,
   totalPrice: 0,
 };
 
@@ -37,6 +38,8 @@ export const FormProvider = ({ children }) => {
     city: "",
   });
 
+  console.log(state);
+
   const [errMessages, setErrMessages] = useState({
     firstName: "",
     lastName: "",
@@ -52,7 +55,6 @@ export const FormProvider = ({ children }) => {
     totalPrice,
     customerData: customerValues,
   } = state;
-  console.log(state);
 
   // const [itemValues, setItemValues] = useState([{ id: initalIndex }]);
   const [price, setPrice] = useState(0);
@@ -133,6 +135,13 @@ export const FormProvider = ({ children }) => {
     console.log(e.target);
   };
 
+  const handleCategoryUpdate = (e, id, category) => {
+    dispatch({
+      type: "UPDATE_ITEM",
+      payload: { name: "category", id, value: category },
+    });
+  };
+
   useEffect(() => {
     const ids = itemsIds;
     const newItemsValues = itemValues;
@@ -165,6 +174,8 @@ export const FormProvider = ({ children }) => {
         telValidationMess,
         isTelError,
         requiredMessages,
+        handleCategoryUpdate,
+        items: state.items,
       }}
     >
       {children}

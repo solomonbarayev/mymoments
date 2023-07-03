@@ -2,56 +2,39 @@ import React from "react";
 import ToggleButtons from "./ToggleButtons";
 import AntDropzone from "./AntDropzone";
 import CategoryPicker from "./CategoryPicker";
+import { useForm } from "../contexts/FormContext";
+import Input from "./Input";
+import CustomOptions from "./CustomOptions";
 
-const ProductDetails = () => {
+const ProductDetails = ({ id }) => {
+  const { items, handleItemsChange } = useForm();
+  const item = items.filter((el) => el.id == id)[0];
+
+  const checkIfCategory = () => {
+    return item && item.category != undefined && item.category != "";
+  };
+
   return (
     <section className="form__print-container">
-      <CategoryPicker />
-      <>
-        <AntDropzone />
-      </>
+      <CategoryPicker id={id} />
 
-      {/* <section
-                  item-index={el}
-                  key={el}
-                  className="form__section form__section_type_product"
-                >
-                  <div className="form__group">
-                    <div className="form__dropdowns">
-                      <Dropdown
-                        list={categories}
-                        name="category"
-                        label="סוג חולצה"
-                        formValues={itemValues[i]?.category}
-                        handleChange={(e) => handleItemsChange(e, el)}
-                      />
-                      <Dropdown
-                        list={colors}
-                        name="color"
-                        label="צבע"
-                        formValues={itemValues[i]?.color}
-                        handleChange={(event) => handleItemsChange(event, el)}
-                      />
-                      <Dropdown
-                        list={sizes}
-                        name="size"
-                        label="מידה"
-                        formValues={itemValues[i]?.size}
-                        handleChange={(event) => handleItemsChange(event, el)}
-                      />
-                    </div>
-                    <Input
-                      name="amount"
-                      label="כמות"
-                      formValues={itemValues[i]?.amount}
-                      handleChange={(event) => handleItemsChange(event, el)}
-                    />
-                  </div>
-                  <div className="form__group form__group_type_images">
-                    <FileUpload name="image1" label="הדפס קידמי" />
-                    <FileUpload name="image2" label="הדפס אחורי" />
-                  </div>
-                </section> */}
+      {checkIfCategory() && (
+        <div className="form__count-input">
+          <Input
+            type="tel"
+            label="ציין את הכמות הרצויה"
+            name="itemCount"
+            handleChange={(e) => handleItemsChange(e, id)}
+          />
+        </div>
+      )}
+
+      {/* show the custom options section if there is a count */}
+      {item && item.itemCount != undefined && item.itemCount != "" && (
+        <CustomOptions id={id} itemCount={item.itemCount} />
+      )}
+
+      <>{/* <AntDropzone /> */}</>
     </section>
   );
 };

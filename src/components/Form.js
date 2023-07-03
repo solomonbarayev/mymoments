@@ -19,6 +19,7 @@ cats = cats.map((cat) => cat.name);
 
 const Form = () => {
   const [expanded, setExpanded] = useState(0);
+  const [showAddress, setShowAddress] = useState(false);
   const [categories, setCategories] = useState(cats);
   const [colors, setColors] = useState(cols);
   const [sizes, setSizes] = useState(siz);
@@ -41,12 +42,58 @@ const Form = () => {
 
   return (
     <form className="form">
+      <section className="form__section form__section_type_customer">
+        <h2 className="form__product-title">פרטי לקוח</h2>
+        <div className="form__group form__group_type_customer">
+          <Input
+            name="fullName"
+            label="שם מלא"
+            formValues={customerValues}
+            handleChange={handleCustomerChange}
+          />
+          <Input
+            name="phone"
+            maxlength="14"
+            label="טלפון"
+            formValues={customerValues}
+            handleChange={handleCustomerChange}
+            validationMessage={""}
+          />
+          <div className="form__checkbox">
+            <label id="show-address">
+              האם אתם מעוניינים במשלוח? (המשלוח בתשלום)
+            </label>
+            <input
+              type="checkbox"
+              value={showAddress}
+              htmlFor="show-address"
+              onChange={() => setShowAddress(!showAddress)}
+            />
+          </div>
+          {showAddress && (
+            <>
+              <Input
+                name="address"
+                label="כתובת למשלוח"
+                formValues={customerValues}
+                handleChange={handleCustomerChange}
+              />
+              <Input
+                name="city"
+                label="עיר מגורים"
+                formValues={customerValues}
+                handleChange={handleCustomerChange}
+              />
+            </>
+          )}
+        </div>
+      </section>
       <div className="form__products-container">
         {itemsIds.map((el, i) => (
-          <div className="form__accordion">
+          <div className="form__accordion" key={i}>
             <Accordion
               sx={{
-                "box-shadow": "none",
+                boxShadow: "none",
               }}
               expanded={expanded === i}
               onClick={() => setExpanded(i)}
@@ -88,7 +135,7 @@ const Form = () => {
               </AccordionSummary>
 
               <AccordionDetails>
-                <ProductDetails />
+                <ProductDetails id={el} />
               </AccordionDetails>
             </Accordion>
           </div>
@@ -107,50 +154,6 @@ const Form = () => {
           {totalPrice}
         </p>
       </div>
-      <section className="form__section form__section_type_customer">
-        <h2 className="form__product-title">פרטי לקוח</h2>
-        <div className="form__group form__group_type_customer">
-          <Input
-            name="firstName"
-            label="שם פרטי"
-            formValues={customerValues}
-            handleChange={handleCustomerChange}
-          />
-          <Input
-            name="lastName"
-            label="שם משפחה"
-            formValues={customerValues}
-            handleChange={handleCustomerChange}
-          />
-          <Input
-            name="address"
-            label="כתובת למשלוח"
-            formValues={customerValues}
-            handleChange={handleCustomerChange}
-          />
-          <Input
-            name="city"
-            label="עיר מגורים"
-            formValues={customerValues}
-            handleChange={handleCustomerChange}
-          />
-          <Input
-            name="phone"
-            maxlength="14"
-            label="טלפון"
-            formValues={customerValues}
-            handleChange={handleCustomerChange}
-            validationMessage={"..."}
-          />
-          <Input
-            name="email"
-            type="email"
-            label="אימייל"
-            formValues={customerValues}
-            handleChange={handleCustomerChange}
-          />
-        </div>
-      </section>
       <button type="submit">שלח</button>
     </form>
   );

@@ -1,70 +1,56 @@
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import "swiper/css/scrollbar";
-import { Navigation, Pagination, Scrollbar } from "swiper";
-import Tshirt from "../assets/Tshirt.jpg";
-import aprons from "../assets/aprons.jpg";
-import jakets from "../assets/jakets.jpg";
-import kapuchone from "../assets/kapuchone.jpg";
-import pens from "../assets/pens.jpg";
-import towels from "../assets/towels.jpg";
 import React, { useRef, useState } from "react";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import "../blocks/swiper.css";
+import Tshirt from "../assets/Tshirt.jpg";
+import hat from "../assets/hat.jpg";
+import wifebeater from "../assets/wifebeater.jpg";
+import dryfit from "../assets/dryfit.jpg";
+import { useForm } from "../contexts/FormContext.js";
 
 const categories = [
   {
-    name: "חולצות",
+    name: "כותנה",
     image: Tshirt,
   },
   {
-    name: "ג'קטים",
-    image: jakets,
+    name: "דרייפיט",
+    image: dryfit,
   },
   {
-    name: "קפוצ'ונים",
-    image: kapuchone,
+    name: "גופיות",
+    image: wifebeater,
   },
   {
-    name: "מגבות",
-    image: towels,
-  },
-  {
-    name: "סינרים",
-    image: aprons,
-  },
-  {
-    name: "עטים",
-    image: pens,
+    name: "כובעים",
+    image: hat,
   },
 ];
 
 // import required modules
 
-export default function CategoryPicker() {
+export default function CategoryPicker({ id }) {
+  const [selection, setSelection] = useState("");
+
+  const { handleCategoryUpdate, items } = useForm();
+
+  function handleCategoryClick(e, category) {
+    //check for id == item.id and category == item.category. yes - true, no false;
+    setSelection(category);
+    handleCategoryUpdate(e, id, category);
+  }
+
   return (
-    <Swiper
-      slidesPerView={2}
-      spaceBetween={20}
-      // Pagination={{
-      //   clickable: true,
-      // }}
-      navigation={true}
-      modules={[Navigation]}
-      //Scrollbar={{ draggable: true }}
-      className="mySwiper"
-    >
+    <div className="form__categories">
       {categories.map((category) => (
-        <SwiperSlide key={category}>
-          <div className="category_picker__item">
-            {category.name}
-            <img className="" src={category.image}></img>
-          </div>
-        </SwiperSlide>
+        <div
+          key={category.name}
+          onClick={(e) => handleCategoryClick(e, category.name)}
+          className={`form__category-item ${
+            category.name == selection ? "form__category-item_active" : ""
+          }`}
+        >
+          {category.name}
+          <img className="form__category-img" src={category.image} />
+        </div>
       ))}
-    </Swiper>
+    </div>
   );
 }

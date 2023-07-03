@@ -1,0 +1,30 @@
+.options{
+    /* background-color: gray; */
+    width: 100%;
+    display: flex;
+}
+
+.options__panel{
+    flex: 1;
+    /* background: pink; */
+}
+
+.options__size-grid{
+    display: grid;
+    grid-template-columns: repeat(6, 50px);
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    max-width: 300px;
+    border-radius: 5px;
+}
+
+.options__grid-item{
+    border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+.options__grid-item_input{
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    text-align: center;
+}

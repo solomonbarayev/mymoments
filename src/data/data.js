@@ -1,16 +1,15 @@
 export const data = {
   colors: ["לבן", "שחור", "אפור", "כחול", "ירוק", "צהוב"],
   categories: [
-    { name: "חולצות", price: 40 },
-    { name: "גקטים", price: 50 },
-    { name: "קפוצ'ונים", price: 60 },
-    { name: "מגבות", price: 40 },
-    { name: "סינרים", price: 50 },
-    { name: "עטים", price: 60 },
+    { name: "כותנה", price: 40 },
+    { name: "דרייפיט", price: 50 },
+    { name: "גופיות", price: 60 },
+    { name: "כובעים", price: 40 },
   ],
   sizes: ["XS", "S", "M", "L", "XL"],
   printPrices: {
     frontPrintPrice: 10,
     backPrintPrice: 20,
   },
+  shippingPrice: 20,
 };
