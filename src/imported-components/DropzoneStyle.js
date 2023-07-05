@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useDropzone } from "react-dropzone";
+// import { useDropzone } from "react-dropzone";
 
 const baseStyle = {
   flex: 1,

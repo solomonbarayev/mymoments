@@ -99,6 +99,25 @@ export const FormProvider = ({ children }) => {
     });
   };
 
+  const handleAddSubItem = (e, id) => {
+    dispatch({
+      type: "ADD_SUB_ITEM",
+      payload: { id, value: { subItemId: createUniqueId() } },
+    });
+  };
+
+  const handleUpdateSubitem = (e, itemId, subItemId) => {
+    dispatch({
+      type: "UPDATE_SUB_ITEM",
+      payload: {
+        itemId,
+        subItemId,
+        name: e.target.name,
+        value: e.target.value,
+      },
+    });
+  };
+
   const handleRequired = (e) => {
     let newState = errMessages;
 
@@ -149,7 +168,10 @@ export const FormProvider = ({ children }) => {
     const exisitingIds = itemValues.map((el) => el.id);
     ids.forEach((id) => {
       if (!exisitingIds.includes(id)) {
-        newItemsValues.push({ id });
+        newItemsValues.push({
+          id,
+          subItems: [{ subItemId: createUniqueId() }],
+        });
       } else return;
     });
   }, [itemsIds, itemValues]);
@@ -176,6 +198,8 @@ export const FormProvider = ({ children }) => {
         requiredMessages,
         handleCategoryUpdate,
         items: state.items,
+        createUniqueId,
+        handleUpdateSubitem,
       }}
     >
       {children}

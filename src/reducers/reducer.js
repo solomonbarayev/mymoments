@@ -35,6 +35,33 @@ const reducer = (state, action) => {
     return newState;
   }
 
+  if (action.type === "ADD_SUB_ITEM") {
+    const newState = {
+      ...state,
+      items: state.items.map((item) => {
+        if (item.id === action.payload.id) {
+          item.subItems.push(action.payload.value);
+        }
+      }),
+    };
+    return newState;
+  }
+
+  if (action.type === "UPDATE_SUB_ITEM") {
+    const newState = {
+      ...state,
+      items: state.items.map((item) => {
+        if (item.id === action.payload.id) {
+          const subItem = item.subItems.filter(
+            (subI) => subI.subItemId === action.payload.subItemId
+          )[0];
+          subItem[action.payload.name] = action.payload.value;
+        }
+      }),
+    };
+    return newState;
+  }
+
   if (action.type === "UPDATE_CUSTOMER") {
     const newState = {
       ...state,

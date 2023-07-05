@@ -6,7 +6,7 @@ export const data = {
     { name: "גופיות", price: 60 },
     { name: "כובעים", price: 40 },
   ],
-  sizes: ["XS", "S", "M", "L", "XL"],
+  sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
   printPrices: {
     frontPrintPrice: 10,
     backPrintPrice: 20,

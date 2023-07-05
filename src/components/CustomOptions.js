@@ -2,80 +2,65 @@ import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import { data } from "../data/data";
 import { useForm } from "../contexts/FormContext";
+import Input from "./Input";
+import { BsDashCircleFill } from "react-icons/bs";
 
 const colors = data.colors;
 const sizes = data.sizes;
 
 console.log(data.colors);
 
-const CustomOptions = ({ itemCount, id }) => {
+const CustomOptions = ({ itemCount, id, subItemId }) => {
   const useColors = itemCount > 10 ? colors : ["שחור", "לבן"];
-  const { items, handleItemsChange } = useForm();
+  const { items, handleItemsChange, createUniqueId, handleUpdateSubitem } =
+    useForm();
   const item = items.filter((item) => id == item.id)[0];
+  const subItem = item.subItems;
+  const subItemIds = subItem.map((el) => el.subItemId);
+  //   console.log(id);
+  //   console.log(subItemId);
   return (
-    <section className="options">
-      <div className="options__panel options__panel_side_right">
-        <div className="options__size-grid">
-          <div className="options__grid-item">S</div>
-          <div className="options__grid-item">M</div>
-          <div className="options__grid-item">L</div>
-          <div className="options__grid-item">XL</div>
-          <div className="options__grid-item">XXL</div>
-          <div className="options__grid-item">XXXL</div>
-          <div className="options__grid-item">
-            <input
-              type="text"
-              inputMode="numeric"
-              className="options__grid-item options__grid-item_input"
-            />{" "}
+    <>
+      {subItemIds.map((subId) => (
+        <section className="options" key={subId}>
+          <div className="options__panel_delete_button">
+            <button
+              type="button"
+              className="form__remove-item-btn"
+              //   onClick={() => removeItem(el)}
+            >
+              <BsDashCircleFill />
+            </button>
           </div>
-          <div className="options__grid-item">
-            <input
-              type="text"
-              inputMode="numeric"
-              className="options__grid-item options__grid-item_input"
-            />{" "}
+          <div className="options__panel options__panel_side_right">
+            <Dropdown
+              list={sizes}
+              name="size"
+              label="מידה"
+              formValues={item?.color}
+              handleChange={(event) => handleItemsChange(event, id)}
+            />
           </div>
-          <div className="options__grid-item">
-            <input
-              type="text"
-              inputMode="numeric"
-              className="options__grid-item options__grid-item_input"
-            />{" "}
+          <div className="options__panel options__panel_side_center">
+            <Input
+              type="tel"
+              label="כמות המידה הרצויה"
+              name="sizeCount"
+              handleChange={(e) => handleUpdateSubitem(e, id, subId)}
+            />
           </div>
-          <div className="options__grid-item">
-            <input
-              type="text"
-              inputMode="numeric"
-              className="options__grid-item options__grid-item_input"
-            />{" "}
+          <div className="options__panel options__panel_side_left">
+            <Dropdown
+              list={useColors}
+              name="color"
+              label="צבע"
+              formValues={item?.color}
+              handleChange={(event) => handleItemsChange(event, id)}
+            />
           </div>
-          <div className="options__grid-item">
-            <input
-              type="text"
-              inputMode="numeric"
-              className="options__grid-item options__grid-item_input"
-            />{" "}
-          </div>
-          <div className="options__grid-item">
-            <input
-              type="text"
-              inputMode="numeric"
-              className="options__grid-item options__grid-item_input"
-            />{" "}
-          </div>
-        </div>
-      </div>
-      <div className="options__panel options__panel_side_left">
-        <Dropdown
-          list={useColors}
-          name="color"
-          label="צבע"
-          formValues={item?.color}
-          handleChange={(event) => handleItemsChange(event, id)}
-        />
-      </div>
-    </section>
+        </section>
+      ))}
+    </>
   );
 };
 

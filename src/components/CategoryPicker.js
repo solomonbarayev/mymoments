@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Tshirt from "../assets/Tshirt.jpg";
 import hat from "../assets/hat.jpg";
 import wifebeater from "../assets/wifebeater.jpg";
@@ -33,8 +33,13 @@ export default function CategoryPicker({ id }) {
 
   function handleCategoryClick(e, category) {
     //check for id == item.id and category == item.category. yes - true, no false;
-    setSelection(category);
     handleCategoryUpdate(e, id, category);
+  }
+
+  function getComputedClass(category) {
+    return `form__category-item ${
+      category.name == selection ? "form__category-item_active" : ""
+    }`;
   }
 
   return (
@@ -42,10 +47,11 @@ export default function CategoryPicker({ id }) {
       {categories.map((category) => (
         <div
           key={category.name}
-          onClick={(e) => handleCategoryClick(e, category.name)}
-          className={`form__category-item ${
-            category.name == selection ? "form__category-item_active" : ""
-          }`}
+          onClick={(e) => {
+            handleCategoryClick(e, category.name);
+            setSelection(category.name);
+          }}
+          className={getComputedClass(category)}
         >
           {category.name}
           <img className="form__category-img" src={category.image} />

@@ -18,7 +18,6 @@ let { categories: cats, colors: cols, sizes: siz } = data;
 cats = cats.map((cat) => cat.name);
 
 const Form = () => {
-  const [expanded, setExpanded] = useState(0);
   const [showAddress, setShowAddress] = useState(false);
   const [categories, setCategories] = useState(cats);
   const [colors, setColors] = useState(cols);
@@ -34,10 +33,20 @@ const Form = () => {
     removeItem,
     totalPrice,
   } = useForm();
+  const [expanded, setExpanded] = useState(itemsIds[0]);
 
   const addItemAndExpand = () => {
     addItem();
-    setExpanded(itemsIds.length);
+  };
+
+  useEffect(() => {
+    setExpanded(itemsIds[itemsIds.length - 1]);
+  }, [itemsIds]);
+
+  const removeAndExpandPrev = (el) => {
+    console.log(el);
+    removeItem(el);
+    setExpanded(el);
   };
 
   return (
@@ -73,14 +82,14 @@ const Form = () => {
           {showAddress && (
             <>
               <Input
-                name="address"
-                label="כתובת למשלוח"
+                name="city"
+                label="עיר מגורים"
                 formValues={customerValues}
                 handleChange={handleCustomerChange}
               />
               <Input
-                name="city"
-                label="עיר מגורים"
+                name="address"
+                label="כתובת למשלוח"
                 formValues={customerValues}
                 handleChange={handleCustomerChange}
               />
@@ -90,13 +99,13 @@ const Form = () => {
       </section>
       <div className="form__products-container">
         {itemsIds.map((el, i) => (
-          <div className="form__accordion" key={i}>
+          <div className="form__accordion" key={el}>
             <Accordion
               sx={{
                 boxShadow: "none",
               }}
-              expanded={expanded === i}
-              onClick={() => setExpanded(i)}
+              expanded={expanded === el}
+              onClick={() => setExpanded(el)}
             >
               <AccordionSummary
                 // expandIcon={<ExpandMoreIcon />}
@@ -121,13 +130,13 @@ const Form = () => {
                     lineHeight: "1.7em",
                   }}
                 >
-                  הדפסה {i + 1}
+                  הזמנה {i + 1}
                 </Typography>
                 {itemsIds.length == 1 ? null : (
                   <button
                     type="button"
                     className="form__remove-item-btn"
-                    onClick={() => removeItem(el)}
+                    onClick={() => removeAndExpandPrev(el)}
                   >
                     <BsFillTrash3Fill />
                   </button>
@@ -146,7 +155,7 @@ const Form = () => {
         className="btn btn-primary form__add-btn"
         onClick={() => addItemAndExpand()}
       >
-        הוסף הדפסה <AiOutlinePlusCircle />
+        הוסף הזמנה <AiOutlinePlusCircle />
       </button>
       <div className="form__price-container">
         <p className="form__price">

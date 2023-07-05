@@ -6,9 +6,9 @@ import { FormProvider } from "./contexts/FormContext.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  //<React.StrictMode>
+  // <React.StrictMode>
   <FormProvider>
     <App />
   </FormProvider>
-  //</React.StrictMode>
+  // </React.StrictMode>
 );
