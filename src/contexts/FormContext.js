@@ -18,7 +18,7 @@ const initalIndex = createUniqueId();
 
 const initialState = {
   items: [],
-  itemsIds: [initalIndex],
+  // itemsIds: [initalIndex],
   customerData: {},
   shipping: false,
   totalPrice: 0,
@@ -162,23 +162,33 @@ export const FormProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const ids = itemsIds;
-    const newItemsValues = itemValues;
-    //whenever there is a new ID, initialize an object into itemValues with that id
-    const exisitingIds = itemValues.map((el) => el.id);
-    ids.forEach((id) => {
-      if (!exisitingIds.includes(id)) {
-        newItemsValues.push({
-          id,
-          subItems: [{ subItemId: createUniqueId() }],
-        });
-      } else return;
-    });
+    // const ids = itemsIds;
+    // const newItemsValues = itemValues;
+    // //whenever there is a new ID, initialize an object into itemValues with that id
+    // const exisitingIds = itemValues.map((el) => el?.id);
+    // ids.forEach((id) => {
+    //   if (!exisitingIds.includes(id)) {
+    //     newItemsValues.push({
+    //       id,
+    //       subItems: [{ subItemId: createUniqueId() }],
+    //     });
+    //   } else return;
+    // });
+    // console.log(newItemsValues);
+    // dispatch({ type: "UPDATE_ITEMS", payload: newItemsValues });
+    //write a function that will add item to items array that is not there yet and will not add it if it is already there
+    // const newItems = itemsIds.map((id) => {
+    //   const item = itemValues.find((el) => el.id == id);
+    //   if (item) return item;
+    //   else return { id, subItems: [{ subItemId: createUniqueId() }] };
+    // });
+    // dispatch({ type: "UPDATE_ITEMS", payload: newItems });
   }, [itemsIds, itemValues]);
 
   useEffect(() => {
-    dispatch({ type: "CALCULATE_PRICE" });
-  }, [itemValues]);
+    //add initial item to items array
+    dispatch({ type: "ADD_ITEM", payload: initalIndex });
+  }, []);
 
   return (
     <FormContext.Provider
@@ -189,7 +199,7 @@ export const FormProvider = ({ children }) => {
         handleFileUpload,
         itemValues,
         price,
-        itemsIds,
+        itemsIds: state.items.map((el) => el.id),
         addItem,
         removeItem,
         totalPrice,

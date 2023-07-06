@@ -9,8 +9,9 @@ import CustomOptions from "./CustomOptions";
 const ProductDetails = ({ id }) => {
   const { items, handleItemsChange } = useForm();
   console.log(id);
-  const item = items.filter((el) => el.id == id)[0];
-  console.log(item);
+  const item = items.filter((item) => id == item?.id)[0];
+  //item is undefined when the page is first loaded so we need to check if it exists
+  console.log("item", item);
   const checkIfCategory = () => {
     return item && item.category != undefined && item.category != "";
   };

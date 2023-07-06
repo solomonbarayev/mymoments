@@ -4,17 +4,17 @@ const reducer = (state, action) => {
   if (action.type === "ADD_ITEM") {
     const newState = {
       ...state,
-      itemsIds: [...state.itemsIds, action.payload],
+
+      items: [...state.items, { id: action.payload, subItems: [] }],
     };
     return newState;
   }
 
   if (action.type === "REMOVE_ITEM") {
     const newState =
-      state.itemsIds.length > 1
+      state.items.length > 1
         ? {
             ...state,
-            itemsIds: state.itemsIds.filter((id) => id !== action.payload),
             items: state.items.filter((item) => item.id !== action.payload),
           }
         : state;
@@ -31,6 +31,14 @@ const reducer = (state, action) => {
         }
         return item;
       }),
+    };
+    return newState;
+  }
+
+  if (action.type === "UPDATE_ITEMS") {
+    const newState = {
+      ...state,
+      items: action.payload,
     };
     return newState;
   }
