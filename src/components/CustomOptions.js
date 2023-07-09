@@ -1,34 +1,39 @@
-import React, { useState } from "react";
-import Dropdown from "./Dropdown";
-import { data } from "../data/data";
-import { useForm } from "../contexts/FormContext";
-import Input from "./Input";
-import { BsDashCircleFill } from "react-icons/bs";
+import React, { useState } from 'react';
+import Dropdown from './Dropdown';
+import { data } from '../data/data';
+import { useForm } from '../contexts/FormContext';
+import Input from './Input';
+import { BsDashCircleFill } from 'react-icons/bs';
 
 const colors = data.colors;
 const sizes = data.sizes;
 
-console.log(data.colors);
-
-const CustomOptions = ({ itemCount, id, subItemId }) => {
-  const useColors = itemCount > 10 ? colors : ["שחור", "לבן"];
-  const { items, handleItemsChange, createUniqueId, handleUpdateSubitem } =
-    useForm();
+const CustomOptions = ({
+  itemCount,
+  id,
+  subItemId,
+  subItemCount,
+  setSubItemCount,
+}) => {
+  const useColors = itemCount > 10 ? colors : ['שחור', 'לבן'];
+  const { items, handleUpdateSubitem } = useForm();
   const item = items.filter((item) => id == item.id)[0];
-  const subItem = item.subItems;
-  const subItemIds = subItem.map((el) => el.subItemId);
-  //   console.log(id);
-  //   console.log(subItemId);
+  const subItems = item.subItems;
+  const subItemIds = subItems.map((el) => el.subItemId);
+
+  function handleSubItemCount(e, subId) {
+    // subItemCount = e.target.value;
+    // setSubItemCount = subItemCount;
+    setSubItemCount(Number(e.target.value) + subItemCount);
+    handleUpdateSubitem(e, id, subId);
+  }
+
   return (
     <>
       {subItemIds.map((subId) => (
         <section className="options" key={subId}>
           <div className="options__panel_delete_button">
-            <button
-              type="button"
-              className="form__remove-item-btn"
-              //   onClick={() => removeItem(el)}
-            >
+            <button type="button" className="form__remove-item-btn">
               <BsDashCircleFill />
             </button>
           </div>
@@ -37,8 +42,10 @@ const CustomOptions = ({ itemCount, id, subItemId }) => {
               list={sizes}
               name="size"
               label="מידה"
-              formValues={item?.color}
-              handleChange={(event) => handleItemsChange(event, id)}
+              formValues={
+                subItems.filter((el) => el.subItemId == subId)[0]?.size
+              }
+              handleChange={(e) => handleUpdateSubitem(e, subId)}
             />
           </div>
           <div className="options__panel options__panel_side_center">
@@ -46,7 +53,7 @@ const CustomOptions = ({ itemCount, id, subItemId }) => {
               type="tel"
               label="כמות המידה הרצויה"
               name="sizeCount"
-              handleChange={(e) => handleUpdateSubitem(e, id, subId)}
+              handleChange={(e) => handleSubItemCount(e, subId)}
             />
           </div>
           <div className="options__panel options__panel_side_left">
@@ -54,8 +61,10 @@ const CustomOptions = ({ itemCount, id, subItemId }) => {
               list={useColors}
               name="color"
               label="צבע"
-              formValues={item?.color}
-              handleChange={(event) => handleItemsChange(event, id)}
+              formValues={
+                subItems.filter((el) => el.subItemId == subId)[0]?.color
+              }
+              handleChange={(e) => handleUpdateSubitem(e, id, subId)}
             />
           </div>
         </section>
@@ -65,33 +74,3 @@ const CustomOptions = ({ itemCount, id, subItemId }) => {
 };
 
 export default CustomOptions;
-
-/* <section
-                  item-index={el}
-                  key={el}
-                  className="form__section form__section_type_product"
-                >
-                  <div className="form__group">
-                    <div className="form__dropdowns">
-                      <Dropdown
-                        list={categories}
-                        name="category"
-                        label="סוג חולצה"
-                        formValues={itemValues[i]?.category}
-                        handleChange={(e) => handleItemsChange(e, el)}
-                      />
-                      
-                    
-                    </div>
-                    <Input
-                      name="amount"
-                      label="כמות"
-                      formValues={itemValues[i]?.amount}
-                      handleChange={(event) => handleItemsChange(event, el)}
-                    />
-                  </div>
-                  <div className="form__group form__group_type_images">
-                    <FileUpload name="image1" label="הדפס קידמי" />
-                    <FileUpload name="image2" label="הדפס אחורי" />
-                  </div>
-                </section> */

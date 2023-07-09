@@ -1,25 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import Tshirt from "../assets/Tshirt.jpg";
-import hat from "../assets/hat.jpg";
-import wifebeater from "../assets/wifebeater.jpg";
-import dryfit from "../assets/dryfit.jpg";
-import { useForm } from "../contexts/FormContext.js";
+import React, { useEffect, useRef, useState } from 'react';
+import Tshirt from '../assets/Tshirt.jpg';
+import hat from '../assets/hat.jpg';
+import wifebeater from '../assets/wifebeater.jpg';
+import dryfit from '../assets/dryfit.jpg';
+import { useForm } from '../contexts/FormContext.js';
 
 const categories = [
   {
-    name: "כותנה",
+    name: 'כותנה',
     image: Tshirt,
   },
   {
-    name: "דרייפיט",
+    name: 'דרייפיט',
     image: dryfit,
   },
   {
-    name: "גופיות",
+    name: 'גופיות',
     image: wifebeater,
   },
   {
-    name: "כובעים",
+    name: 'כובעים',
     image: hat,
   },
 ];
@@ -27,7 +27,7 @@ const categories = [
 // import required modules
 
 export default function CategoryPicker({ id }) {
-  const [selection, setSelection] = useState("");
+  const [selection, setSelection] = useState('');
 
   const { handleCategoryUpdate, items } = useForm();
 
@@ -38,7 +38,7 @@ export default function CategoryPicker({ id }) {
 
   function getComputedClass(category) {
     return `form__category-item ${
-      category.name == selection ? "form__category-item_active" : ""
+      category.name == selection ? 'form__category-item_active' : ''
     }`;
   }
 
@@ -51,8 +51,7 @@ export default function CategoryPicker({ id }) {
             handleCategoryClick(e, category.name);
             setSelection(category.name);
           }}
-          className={getComputedClass(category)}
-        >
+          className={getComputedClass(category)}>
           {category.name}
           <img className="form__category-img" src={category.image} />
         </div>

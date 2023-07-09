@@ -1,7 +1,7 @@
-import { data } from "../data/data";
+import { data } from '../data/data';
 
 const reducer = (state, action) => {
-  if (action.type === "ADD_ITEM") {
+  if (action.type === 'ADD_ITEM') {
     const newState = {
       ...state,
 
@@ -9,14 +9,14 @@ const reducer = (state, action) => {
         ...state.items,
         {
           id: action.payload.itemId,
-          subItems: [{ subtItemId: action.payload.subItemId }],
+          subItems: [{ subItemId: action.payload.subItemId }],
         },
       ],
     };
     return newState;
   }
 
-  if (action.type === "REMOVE_ITEM") {
+  if (action.type === 'REMOVE_ITEM') {
     const newState =
       state.items.length > 1
         ? {
@@ -27,7 +27,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === "UPDATE_ITEM") {
+  if (action.type === 'UPDATE_ITEM') {
     //only update the item that was changed
     const newState = {
       ...state,
@@ -41,7 +41,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === "UPDATE_ITEMS") {
+  if (action.type === 'UPDATE_ITEMS') {
     const newState = {
       ...state,
       items: action.payload,
@@ -49,7 +49,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === "ADD_SUB_ITEM") {
+  if (action.type === 'ADD_SUB_ITEM') {
     const newState = {
       ...state,
       items: state.items.map((item) => {
@@ -61,22 +61,23 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === "UPDATE_SUB_ITEM") {
+  if (action.type === 'UPDATE_SUB_ITEM') {
     const newState = {
       ...state,
       items: state.items.map((item) => {
-        if (item.id === action.payload.id) {
+        if (item.id === action.payload.itemId) {
           const subItem = item.subItems.filter(
             (subI) => subI.subItemId === action.payload.subItemId
           )[0];
           subItem[action.payload.name] = action.payload.value;
         }
+        return item;
       }),
     };
     return newState;
   }
 
-  if (action.type === "UPDATE_CUSTOMER") {
+  if (action.type === 'UPDATE_CUSTOMER') {
     const newState = {
       ...state,
       customerData: {
@@ -87,7 +88,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === "CALCULATE_PRICE") {
+  if (action.type === 'CALCULATE_PRICE') {
     let newTotalPrice = 0;
     state.items.forEach((item) => {
       if (item.category !== undefined) {
@@ -103,7 +104,7 @@ const reducer = (state, action) => {
     };
     return newState;
   } else {
-    throw new Error("No matching action type so GTFO");
+    throw new Error('No matching action type so GTFO');
   }
 };
 
