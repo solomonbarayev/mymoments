@@ -35,16 +35,14 @@ const ProductDetails = ({ id }) => {
         item.itemCount != undefined &&
         item.itemCount != "" &&
         item.category != "כובעים" &&
-        item.subItems.map((el) => {
-          return (
-            <CustomOptions
-              id={id}
-              subItemId={el.subItemId}
-              itemCount={item.itemCount}
-              key={el.subItemId}
-            />
-          );
-        })}
+        item.subItems.map((el) => (
+          <CustomOptions
+            id={id}
+            subItemId={el.subItemId}
+            itemCount={item.itemCount}
+            key={el.subItemId}
+          />
+        ))}
       <>{/* <AntDropzone /> */}</>
     </section>
   );

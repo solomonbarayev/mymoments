@@ -5,7 +5,13 @@ const reducer = (state, action) => {
     const newState = {
       ...state,
 
-      items: [...state.items, { id: action.payload, subItems: [] }],
+      items: [
+        ...state.items,
+        {
+          id: action.payload.itemId,
+          subItems: [{ subtItemId: action.payload.subItemId }],
+        },
+      ],
     };
     return newState;
   }

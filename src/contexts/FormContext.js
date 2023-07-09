@@ -62,7 +62,10 @@ export const FormProvider = ({ children }) => {
   // const [totalPrice, setTotalPrice] = useState(0);
 
   const addItem = () => {
-    dispatch({ type: "ADD_ITEM", payload: createUniqueId() });
+    dispatch({
+      type: "ADD_ITEM",
+      payload: { itemId: createUniqueId(), subItemId: createUniqueId() },
+    });
   };
 
   const removeItem = (id) => {
