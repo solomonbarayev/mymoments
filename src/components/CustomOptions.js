@@ -27,13 +27,15 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
     <>
       <section className="options" key={subItemId}>
         <div className="options__btn-container">
-          <button
-            type="button"
-            className="form__sub-item-btn form__sub-item-btn_type_remove"
-            onClick={() => handleRemoveSubItem(itemId, subItemId)}
-          >
-            <BsDashCircle style={{ color: "#19448b" }} size={20} />
-          </button>
+          {item.subItems.length != 1 && (
+            <button
+              type="button"
+              className="form__sub-item-btn form__sub-item-btn_type_remove"
+              onClick={() => handleRemoveSubItem(itemId, subItemId)}
+            >
+              <BsDashCircle style={{ color: "#19448b" }} size={20} />
+            </button>
+          )}
           <button
             type="button"
             className="form__sub-item-btn form__sub-item-btn_type_add"

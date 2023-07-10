@@ -214,3 +214,7 @@
   color: #3b71ca;
   font-weight: bold;
 }
+
+.form__amount-message_type_error{
+  color:red;
+}

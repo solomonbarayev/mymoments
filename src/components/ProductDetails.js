@@ -8,7 +8,6 @@ import CustomOptions from "./CustomOptions";
 
 const ProductDetails = ({ id }) => {
   // const [itemTotalCount, setItemTotalCount] = useState(0);
-  const [subItemCount, setSubItemCount] = useState(0);
   const { items, handleItemsChange } = useForm();
   const item = items.filter((item) => id == item?.id)[0];
   //item is undefined when the page is first loaded so we need to check if it exists
@@ -19,16 +18,6 @@ const ProductDetails = ({ id }) => {
     // setItemTotalCount(e.target.value);
     handleItemsChange(e, id);
   }
-
-  useEffect(() => {
-    let subCount = 0;
-    items.forEach((item) => {
-      item.subItems.forEach((subItem) => {
-        subCount += Number(subItem.subItemCount);
-      });
-    });
-    setSubItemCount(subCount);
-  }, [JSON.stringify(items)]);
 
   function calculateRemainingQty(itemId) {
     // Number(items.find((el) => el.id == id).itemCount) - subItemCount
@@ -41,7 +30,21 @@ const ProductDetails = ({ id }) => {
     //return item's itemCount - reduced aggregate
     return itemTotalCount - subCount;
   }
+  function handleCheckCustomOptions() {
+    let filled = true;
 
+    item.subItems.forEach((subItem) => {
+      filled =
+        subItem.size &&
+        subItem.color &&
+        subItem.subItemCount &&
+        subItem.size != "" &&
+        subItem.color != "" &&
+        subItem.subItemCount != "";
+    });
+
+    return filled && calculateRemainingQty(id) == 0;
+  }
   return (
     <section className="form__print-container">
       <span className="pick_category_text">בחר את המוצר שברצונך להזמין</span>
@@ -59,7 +62,13 @@ const ProductDetails = ({ id }) => {
           </div>
           {item.category != "כובעים" && (
             <div className="form__amount-message">
-              <span>נשארו {calculateRemainingQty(id)} מוצרים לבחירה</span>
+              {calculateRemainingQty(id) > 0 ? (
+                <span>נשארו {calculateRemainingQty(id)} מוצרים לבחירה</span>
+              ) : calculateRemainingQty(id) == 0 ? null : (
+                <span className="form__amount-message form__amount-message_type_error">
+                  עברת את הכמות הכוללת של מוצר זה
+                </span>
+              )}
             </div>
           )}
         </>
@@ -78,7 +87,7 @@ const ProductDetails = ({ id }) => {
             subItem={el}
           />
         ))}
-      <>{/* <AntDropzone /> */}</>
+      <>{handleCheckCustomOptions() ? <AntDropzone /> : null}</>
     </section>
   );
 };
