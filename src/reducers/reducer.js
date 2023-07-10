@@ -121,7 +121,7 @@ const reducer = (state, action) => {
         const itemPrice = data.categories.filter(
           (cat) => cat.name === item.category
         )[0].price;
-        newTotalPrice += item.amount ? itemPrice * item.amount : 0;
+        newTotalPrice += item.itemCount ? itemPrice * item.itemCount : 0;
       }
     });
     const newState = {

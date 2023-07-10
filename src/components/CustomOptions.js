@@ -56,7 +56,7 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
             handleChange={(e) => handleUpdateSubitem(e, itemId, subItemId)}
           />
         </div>
-        <div className="options__panel options__panel_side_left">
+        <div className="options__panel options__panel_side_right">
           <Dropdown
             list={useColors}
             name="color"
