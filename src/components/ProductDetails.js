@@ -54,11 +54,14 @@ const ProductDetails = ({ id }) => {
               label="ציין את הכמות הרצויה"
               name="itemCount"
               handleChange={(e) => handleTotalCount(e)}
+              formValues={item.itemCount}
             />
           </div>
-          <div className="form__amount-message">
-            <span>נשארו {calculateRemainingQty(id)} מוצרים לבחירה</span>
-          </div>
+          {item.category != "כובעים" && (
+            <div className="form__amount-message">
+              <span>נשארו {calculateRemainingQty(id)} מוצרים לבחירה</span>
+            </div>
+          )}
         </>
       )}
       {/* show the custom options section if there is a count */}
@@ -72,6 +75,7 @@ const ProductDetails = ({ id }) => {
             subItemId={el.subItemId}
             itemCount={item.itemCount}
             key={el.subItemId}
+            subItem={el}
           />
         ))}
       <>{/* <AntDropzone /> */}</>

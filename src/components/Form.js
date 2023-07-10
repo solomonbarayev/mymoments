@@ -39,8 +39,6 @@ const Form = () => {
     addItem();
   };
 
-  console.log(itemsIds[itemsIds.length - 1]);
-
   useEffect(() => {
     setExpanded(itemsIds[itemsIds.length - 1]);
   }, [itemValues.length]);
@@ -59,14 +57,14 @@ const Form = () => {
           <Input
             name="fullName"
             label="שם מלא"
-            formValues={customerValues}
+            formValues={customerValues.fullName}
             handleChange={handleCustomerChange}
           />
           <Input
             name="phone"
             maxlength="14"
             label="טלפון"
-            formValues={customerValues}
+            formValues={customerValues.phone}
             handleChange={handleCustomerChange}
             validationMessage={""}
           />
@@ -86,13 +84,13 @@ const Form = () => {
               <Input
                 name="city"
                 label="עיר מגורים"
-                formValues={customerValues}
+                formValues={customerValues.city}
                 handleChange={handleCustomerChange}
               />
               <Input
                 name="address"
                 label="כתובת למשלוח"
-                formValues={customerValues}
+                formValues={customerValues.address}
                 handleChange={handleCustomerChange}
               />
             </>

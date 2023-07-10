@@ -8,7 +8,7 @@ import { BsDashCircle, BsPlusCircle } from "react-icons/bs";
 const colors = data.colors;
 const sizes = data.sizes;
 
-const CustomOptions = ({ itemCount, itemId, subItemId }) => {
+const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
   const useColors = itemCount > 10 ? colors : ["שחור", "לבן"];
   const { items, handleUpdateSubitem, handleAddSubItem, handleRemoveSubItem } =
     useForm();
@@ -19,7 +19,10 @@ const CustomOptions = ({ itemCount, itemId, subItemId }) => {
   function handleSubItemCount(e, subId) {
     handleUpdateSubitem(e, itemId, subId);
   }
-
+  console.log(
+    "subitme",
+    item.subItems.filter((el) => el.subItemId == subItemId)[0]
+  );
   return (
     <>
       <section className="options" key={subItemId}>
@@ -47,9 +50,7 @@ const CustomOptions = ({ itemCount, itemId, subItemId }) => {
             list={sizes}
             name="size"
             label="מידה"
-            formValues={
-              subItems.filter((el) => el.subItemId == subItemId)[0]?.size
-            }
+            formValues={subItem.size}
             handleChange={(e) => handleUpdateSubitem(e, itemId, subItemId)}
           />
         </div>
@@ -58,9 +59,7 @@ const CustomOptions = ({ itemCount, itemId, subItemId }) => {
             list={useColors}
             name="color"
             label="צבע"
-            formValues={
-              subItems.filter((el) => el.subItemId == subItemId)[0]?.color
-            }
+            formValues={subItem.color}
             handleChange={(e) => handleUpdateSubitem(e, itemId, subItemId)}
           />
         </div>
@@ -70,6 +69,7 @@ const CustomOptions = ({ itemCount, itemId, subItemId }) => {
             label="כמות המידה הרצויה"
             name="subItemCount"
             handleChange={(e) => handleSubItemCount(e, subItemId)}
+            formValues={subItem.subItemCount}
           />
         </div>
       </section>

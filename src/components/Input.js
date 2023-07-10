@@ -1,6 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { formControlClasses } from "@mui/material";
 
 const Input = ({
   formValues,
@@ -24,7 +25,7 @@ const Input = ({
         label={label}
         variant="outlined"
         name={name}
-        value={formValues?.name}
+        value={formValues || ""}
         onChange={handleChange}
         type={type ? type : "text"}
       />
