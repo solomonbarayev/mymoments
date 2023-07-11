@@ -62,17 +62,6 @@ const ProductDetails = ({ id }) => {
               formValues={item.itemCount}
             />
           </div>
-          {item.category != 'כובעים' && (
-            <div className="form__amount-message">
-              {calculateRemainingQty(id) > 0 ? (
-                <span>נשארו {calculateRemainingQty(id)} מוצרים לבחירה</span>
-              ) : calculateRemainingQty(id) <= 0 ? null : (
-                <span className="form__amount-message form__amount-message_type_error">
-                  עברת את הכמות הכוללת של מוצר זה
-                </span>
-              )}
-            </div>
-          )}
         </>
       )}
       {/* show the custom options section if there is a count */}
@@ -90,6 +79,17 @@ const ProductDetails = ({ id }) => {
           />
         ))}
       <>{handleCheckCustomOptions() ? <AntDropzone /> : null}</>
+      {item.category != 'כובעים' && (
+        <div className="form__amount-message">
+          {calculateRemainingQty(id) > 0 ? (
+            <span>נשארו {calculateRemainingQty(id)} מוצרים לבחירה</span>
+          ) : calculateRemainingQty(id) < 0 && item.itemCount != '' ? (
+            <span className="form__amount-message form__amount-message_type_error">
+              עברת את הכמות הכוללת של מוצר זה
+            </span>
+          ) : null}
+        </div>
+      )}
     </section>
   );
 };

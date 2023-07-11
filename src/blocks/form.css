@@ -216,6 +216,11 @@
   font-weight: bold;
 }
 
+.form__amount-message {
+  color: #f78120;
+  font-weight: bold;
+}
+
 .form__amount-message_type_error {
   color: red;
 }
