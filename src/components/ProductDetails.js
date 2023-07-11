@@ -10,9 +10,10 @@ const ProductDetails = ({ id }) => {
   // const [itemTotalCount, setItemTotalCount] = useState(0);
   const { items, handleItemsChange } = useForm();
   const item = items.filter((item) => id == item?.id)[0];
+  const { itemCount, category, subItems } = item;
   //item is undefined when the page is first loaded so we need to check if it exists
   const checkIfCategory = () => {
-    return item && item.category != undefined && item.category != '';
+    return item && category != undefined && category != '';
   };
   function handleTotalCount(e) {
     // setItemTotalCount(e.target.value);
@@ -21,19 +22,21 @@ const ProductDetails = ({ id }) => {
 
   function calculateRemainingQty(itemId) {
     // Number(items.find((el) => el.id == id).itemCount) - subItemCount
-    const itemTotalCount = item.itemCount;
     // "reduce all the subItemCount quantites to one number"
-    const subCount = item.subItems.reduce(
+    const subCount = subItems.reduce(
       (accumulator, next) => accumulator + +next.subItemCount,
       0
     );
     //return item's itemCount - reduced aggregate
-    return itemTotalCount - subCount;
+    return itemCount - subCount;
   }
+
+  const computedQty = calculateRemainingQty(id);
+
   function handleCheckCustomOptions() {
     let filled = true;
 
-    item.subItems.forEach((subItem) => {
+    subItems.forEach((subItem) => {
       filled =
         subItem.size &&
         subItem.color &&
@@ -58,31 +61,33 @@ const ProductDetails = ({ id }) => {
               label="ציין את הכמות הרצויה"
               name="itemCount"
               handleChange={(e) => handleTotalCount(e)}
-              formValues={item.itemCount}
+              formValues={itemCount}
             />
           </div>
         </>
       )}
       {/* show the custom options section if there is a count */}
       {item &&
-        item.itemCount != undefined &&
-        item.itemCount != '' &&
-        item.category != 'כובעים' &&
-        item.subItems.map((el) => (
+        itemCount != undefined &&
+        itemCount != '' &&
+        category != 'כובעים' &&
+        subItems.map((el) => (
           <CustomOptions
             itemId={id}
             subItemId={el.subItemId}
-            itemCount={item.itemCount}
+            itemCount={itemCount}
             key={el.subItemId}
             subItem={el}
           />
         ))}
-      <>{handleCheckCustomOptions() ? <AntDropzone /> : null}</>
-      {item.category != 'כובעים' && (
+
+      {handleCheckCustomOptions() ? <AntDropzone /> : null}
+
+      {category != 'כובעים' && (
         <div className="form__amount-message">
-          {calculateRemainingQty(id) > 0 ? (
-            <span>נשארו {calculateRemainingQty(id)} מוצרים לבחירה</span>
-          ) : calculateRemainingQty(id) < 0 && item.itemCount != '' ? (
+          {computedQty > 0 ? (
+            <span>נשארו {computedQty} מוצרים לבחירה</span>
+          ) : computedQty < 0 && itemCount != '' ? (
             <span className="form__amount-message form__amount-message_type_error">
               עברת את הכמות הכוללת של מוצר זה
             </span>

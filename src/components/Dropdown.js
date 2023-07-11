@@ -19,7 +19,13 @@ const Dropdown = ({ list, name, label, formValues, value, handleChange }) => {
           name={name}
           defaultValue="">
           {list.map((listItem, i) => (
-            <MenuItem key={i} value={listItem}>
+            <MenuItem
+              key={i}
+              value={listItem}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}>
               {listItem}
             </MenuItem>
           ))}
