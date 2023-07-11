@@ -100,14 +100,13 @@
 .form__sub-item-btn{
   border: none;
   background-color: transparent;
-  width: 100%;
-  max-width: 75px;
+  max-width: 200px;
   border-radius: 10px;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
-
+  gap: 10px;
 }
 
 
@@ -217,4 +216,8 @@
 
 .form__amount-message_type_error{
   color:red;
+}
+
+.demo-simple-select-label{
+  direction: rtl;
 }

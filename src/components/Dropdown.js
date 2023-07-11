@@ -7,8 +7,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const Dropdown = ({ list, name, label, formValues, value, handleChange }) => {
   return (
-    <Box>
-      <FormControl sx={{ minWidth: 225 }}>
+    <Box sx={{ dir: "rtl" }}>
+      <FormControl sx={{ minWidth: 150 }}>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
