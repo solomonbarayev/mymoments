@@ -28,7 +28,6 @@ const ProductDetails = ({ id }) => {
       0
     );
     //return item's itemCount - reduced aggregate
-    console.log(itemTotalCount - subCount);
     return itemTotalCount - subCount;
   }
   function handleCheckCustomOptions() {
@@ -43,7 +42,7 @@ const ProductDetails = ({ id }) => {
         subItem.color != '' &&
         subItem.subItemCount != '';
     });
-    const bool = filled && calculateRemainingQty(id) >= 0 ? true : false;
+    const bool = filled && calculateRemainingQty(id) == 0 ? true : false;
     console.log(bool);
     return bool;
   }
