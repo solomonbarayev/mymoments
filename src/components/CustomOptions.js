@@ -38,7 +38,7 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
               type="button"
               className="form__sub-item-btn form__sub-item-btn_type_remove"
               onClick={() => handleRemoveSubItem(itemId, subItemId)}>
-              <BsDashCircle style={{ color: '#19448b' }} size={20} />
+              <BsDashCircle style={{ color: 'rgb(181 52 52)' }} size={20} />
             </button>
           )}
         </div>

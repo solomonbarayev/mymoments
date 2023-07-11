@@ -1,9 +1,7 @@
 .options {
-  /* background-color: gray; */
   width: 100%;
   display: flex;
   align-items: center;
-  /* flex-direction: column; */
   justify-content: center;
   width: 100%;
 }
@@ -17,14 +15,11 @@
 }
 @media (max-width: 570px) {
   .options {
-    /* width: 100%;
-    display: flex; */
+    background-color: #f7fbff;
     flex-direction: column;
     gap: 10px;
-    /* align-items: center; */
     border: 1px solid #7e9ed1;
     border-radius: 11px;
-    /* justify-content: center; */
     position: relative;
     padding: 34px 13px 13px;
   }
@@ -93,7 +88,6 @@
   margin-top: 6px;
   width: 100%;
   max-width: 219px;
-  /* text-align: center; */
-  /* display: flex; */
+
   padding: 12px 0 5px;
 }
