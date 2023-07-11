@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ToggleButtons from "./ToggleButtons";
-import AntDropzone from "./AntDropzone";
-import CategoryPicker from "./CategoryPicker";
-import { useForm } from "../contexts/FormContext";
-import Input from "./Input";
-import CustomOptions from "./CustomOptions";
+import React, { useEffect, useState } from 'react';
+import ToggleButtons from './ToggleButtons';
+import AntDropzone from './AntDropzone';
+import CategoryPicker from './CategoryPicker';
+import { useForm } from '../contexts/FormContext';
+import Input from './Input';
+import CustomOptions from './CustomOptions';
 
 const ProductDetails = ({ id }) => {
   // const [itemTotalCount, setItemTotalCount] = useState(0);
@@ -12,7 +12,7 @@ const ProductDetails = ({ id }) => {
   const item = items.filter((item) => id == item?.id)[0];
   //item is undefined when the page is first loaded so we need to check if it exists
   const checkIfCategory = () => {
-    return item && item.category != undefined && item.category != "";
+    return item && item.category != undefined && item.category != '';
   };
   function handleTotalCount(e) {
     // setItemTotalCount(e.target.value);
@@ -28,6 +28,7 @@ const ProductDetails = ({ id }) => {
       0
     );
     //return item's itemCount - reduced aggregate
+    console.log(itemTotalCount - subCount);
     return itemTotalCount - subCount;
   }
   function handleCheckCustomOptions() {
@@ -38,12 +39,13 @@ const ProductDetails = ({ id }) => {
         subItem.size &&
         subItem.color &&
         subItem.subItemCount &&
-        subItem.size != "" &&
-        subItem.color != "" &&
-        subItem.subItemCount != "";
+        subItem.size != '' &&
+        subItem.color != '' &&
+        subItem.subItemCount != '';
     });
-
-    return filled && calculateRemainingQty(id) == 0;
+    const bool = filled && calculateRemainingQty(id) >= 0 ? true : false;
+    console.log(bool);
+    return bool;
   }
   return (
     <section className="form__print-container">
@@ -60,11 +62,11 @@ const ProductDetails = ({ id }) => {
               formValues={item.itemCount}
             />
           </div>
-          {item.category != "כובעים" && (
+          {item.category != 'כובעים' && (
             <div className="form__amount-message">
               {calculateRemainingQty(id) > 0 ? (
                 <span>נשארו {calculateRemainingQty(id)} מוצרים לבחירה</span>
-              ) : calculateRemainingQty(id) == 0 ? null : (
+              ) : calculateRemainingQty(id) <= 0 ? null : (
                 <span className="form__amount-message form__amount-message_type_error">
                   עברת את הכמות הכוללת של מוצר זה
                 </span>
@@ -76,8 +78,8 @@ const ProductDetails = ({ id }) => {
       {/* show the custom options section if there is a count */}
       {item &&
         item.itemCount != undefined &&
-        item.itemCount != "" &&
-        item.category != "כובעים" &&
+        item.itemCount != '' &&
+        item.category != 'כובעים' &&
         item.subItems.map((el) => (
           <CustomOptions
             itemId={id}

@@ -61,6 +61,7 @@
 
 .form__price-container {
   text-align: center;
+  width: 100%;
 }
 
 .form__price {
@@ -77,6 +78,7 @@
   max-width: 200px;
   width: 100%;
   margin: 0 auto;
+  font-size: 16px !important;
 }
 
 .form__remove-item-btn {
@@ -97,7 +99,7 @@
   align-items: center;
 }
 
-.form__sub-item-btn{
+.form__sub-item-btn {
   border: none;
   background-color: transparent;
   max-width: 200px;
@@ -108,8 +110,6 @@
   align-items: center;
   gap: 10px;
 }
-
-
 
 .form__group_type_customer {
   display: grid;
@@ -157,45 +157,47 @@
   text-align: center;
 }
 
-.form__categories{
+.form__categories {
   display: flex;
   flex-direction: row;
   width: 100%;
   gap: 25px;
 }
 
-@media (max-width: 570px){
-  .form__categories{
+@media (max-width: 570px) {
+  .form__categories {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
     width: 87%;
   }
-  .form__category-item{
+  .form__category-item {
     width: 100%;
     max-width: 100%;
   }
 }
 
-.form__category-item{
+.form__category-item {
   max-width: 40%;
   width: 100%;
   padding: 5px;
   color: #3b71ca;
 }
 
-.form__category-item_active{
+.form__category-item_active {
   color: #3b71ca;
   border: solid 1px #3b71ca;
   border-radius: 5px;
-  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;}
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+    rgba(17, 17, 26, 0.1) 0px 0px 8px;
+}
 
-.form__category-img{
+.form__category-img {
   width: 100%;
 }
 
-.form__checkbox{
+.form__checkbox {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
@@ -205,19 +207,26 @@
   grid-column: 1 / -1;
 }
 
-.form__count-input{
+.form__count-input {
   max-width: 200px;
 }
 
-.pick_category_text{
+.pick_category_text {
   color: #3b71ca;
   font-weight: bold;
 }
 
-.form__amount-message_type_error{
-  color:red;
+.form__amount-message_type_error {
+  color: red;
 }
 
-.demo-simple-select-label{
+.demo-simple-select-label {
   direction: rtl;
+}
+
+.form__send-btn {
+  background-color: #24b17d !important;
+  min-width: 200px;
+  font-size: 16px !important;
+  margin-bottom: 75px;
 }
