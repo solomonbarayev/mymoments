@@ -81,7 +81,9 @@ const ProductDetails = ({ id }) => {
           />
         ))}
 
-      {handleCheckCustomOptions() ? <AntDropzone /> : null}
+      {handleCheckCustomOptions() || category === 'כובעים' ? (
+        <AntDropzone />
+      ) : null}
 
       {category != 'כובעים' && (
         <div className="form__amount-message">
