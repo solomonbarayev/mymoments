@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { useForm } from "../contexts/FormContext";
 
-const ToggleButtons = (props) => {
+const ToggleButtons = ({ itemId }) => {
   const [alignment, setAlignment] = React.useState("front");
-
+  const { handleTypeOfPrint } = useForm();
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
 
   useEffect(() => {
-    console.log(alignment);
+    console.log(itemId);
+    handleTypeOfPrint(itemId, alignment);
   }, [alignment]);
 
   return (
@@ -24,7 +26,8 @@ const ToggleButtons = (props) => {
     >
       <ToggleButton value="front">הדפס קדימה</ToggleButton>
       <ToggleButton value="back">הדפס אחורה</ToggleButton>
-      <ToggleButton value="exclude">ללא הדפס</ToggleButton>
+      <ToggleButton value="doubleSided">הדפס דו-צדדי</ToggleButton>
+      <ToggleButton value="exclude">התאמה אישית</ToggleButton>
     </ToggleButtonGroup>
   );
 };

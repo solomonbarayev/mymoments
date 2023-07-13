@@ -1,6 +1,9 @@
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import ToggleButtons from "./ToggleButtons";
+import { useForm } from "../contexts/FormContext";
+import Dropdown from "./Dropdown";
+import { printSizes, printTypes } from "../constants/constants";
 const { Dragger } = Upload;
 const props = {
   name: "file",
@@ -22,15 +25,17 @@ const props = {
   },
 };
 
-function AntDropzone() {
+function AntDropzone({ itemId, type }) {
+  console.log(itemId);
   return (
     <>
-      <ToggleButtons />
       <Dragger {...props}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
         <p className="ant-upload-text">
+          {type}
+          <br></br>
           לחץ לבחירת תמונת ההדפסה או גרור את התמונה
         </p>
       </Dragger>

@@ -1,7 +1,7 @@
-import { data } from '../data/data';
+import { data } from "../data/data";
 
 const reducer = (state, action) => {
-  if (action.type === 'ADD_ITEM') {
+  if (action.type === "ADD_ITEM") {
     const newState = {
       ...state,
 
@@ -17,7 +17,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'REMOVE_ITEM') {
+  if (action.type === "REMOVE_ITEM") {
     const newState =
       state.items.length > 1
         ? {
@@ -28,7 +28,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'UPDATE_ITEM') {
+  if (action.type === "UPDATE_ITEM") {
     //only update the item that was changed
     const newState = {
       ...state,
@@ -42,7 +42,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'UPDATE_ITEMS') {
+  if (action.type === "UPDATE_ITEMS") {
     const newState = {
       ...state,
       items: action.payload,
@@ -50,7 +50,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'ADD_SUB_ITEM') {
+  if (action.type === "ADD_SUB_ITEM") {
     const newState = {
       ...state,
       items: state.items.map((item) => {
@@ -63,7 +63,45 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type == 'REMOVE_SUB_ITEM') {
+  // if (action.type === "UPDATE_FILE") {
+  //   const newState = {
+  //     items: state.items.map((item) => {
+  //       if (item.id === action.payload.itemId) {
+  //         if (action.payload.printType == "front") {
+  //           //add base64 to item.prints.frontPrint.file
+  //           item.prints.frontPrint.printSize = action.payload.printSize;
+  //         }
+  //         if (action.payload.printType == "back") {
+  //           //add base64 to item.prints.backPrint.file
+  //           item.prints.backPrint.printSize = action.payload.printSize;
+  //         }
+  //         if (action.payload.printType == "noPrint") {
+  //           //add base64 to item.prints.frontPrint.file
+  //           item.noPrint.frontPrint.printSize = action.payload.printSize;
+  //         }
+  //       }
+  //       return item;
+  //     }),
+  //   };
+  //   return newState;
+  // }
+
+  if (action.type === "UPDATE_FILE") {
+    const newState = {
+      ...state,
+      items: state.items.map((item) => {
+        console.log(action.payload.itemId);
+        console.log(item.id == action.payload.itemId);
+        if (item.id == action.payload.itemId) {
+          item.typeOfPrint = action.payload.value;
+        }
+        return item;
+      }),
+    };
+    return newState;
+  }
+
+  if (action.type == "REMOVE_SUB_ITEM") {
     //1. search which item we are dealing with.
     const item = state.items.filter((el) => el.id == action.payload.itemId)[0];
     //2. setting new array with all the sub items not including subItem with subitem id received
@@ -87,7 +125,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'UPDATE_SUB_ITEM') {
+  if (action.type === "UPDATE_SUB_ITEM") {
     const newState = {
       ...state,
       items: state.items.map((item) => {
@@ -103,7 +141,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'UPDATE_CUSTOMER') {
+  if (action.type === "UPDATE_CUSTOMER") {
     const newState = {
       ...state,
       customerData: {
@@ -114,7 +152,7 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'CALCULATE_PRICE') {
+  if (action.type === "CALCULATE_PRICE") {
     let newTotalPrice = 0;
     state.items.forEach((item) => {
       if (item.category !== undefined) {
@@ -131,14 +169,14 @@ const reducer = (state, action) => {
     return newState;
   }
 
-  if (action.type === 'UPDATE_ORDER_NOTES') {
+  if (action.type === "UPDATE_ORDER_NOTES") {
     const newState = {
       ...state,
       orderNotes: action.payload,
     };
     return newState;
   } else {
-    throw new Error('No matching action type so GTFO');
+    throw new Error("No matching action type so GTFO");
   }
 };
 
