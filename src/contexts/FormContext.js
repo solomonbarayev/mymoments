@@ -5,9 +5,9 @@ import React, {
   useState,
   useEffect,
   useReducer,
-} from "react";
-import reducer from "../reducers/reducer";
-import { initialState, createUniqueId } from "../constants/constants";
+} from 'react';
+import reducer from '../reducers/reducer';
+import { initialState, createUniqueId } from '../constants/constants';
 
 const FormContext = createContext();
 
@@ -18,24 +18,24 @@ const validateTel = /^[0-9]*$/;
 export const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isTelError, setIsTelError] = useState(false);
-  const [telValidationMess, setTelValidationMess] = useState("");
+  const [telValidationMess, setTelValidationMess] = useState('');
   const [requiredMessages, setRequiredMessages] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    city: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    address: '',
+    city: '',
   });
 
   console.log(state);
 
   const [errMessages, setErrMessages] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    city: "",
-    phone: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    address: '',
+    city: '',
+    phone: '',
   });
 
   const {
@@ -49,19 +49,18 @@ export const FormProvider = ({ children }) => {
 
   const addItem = () => {
     dispatch({
-      type: "ADD_ITEM",
+      type: 'ADD_ITEM',
       payload: { itemId: createUniqueId(), subItemId: createUniqueId() },
     });
   };
 
   const removeItem = (id) => {
-    dispatch({ type: "REMOVE_ITEM", payload: id });
+    dispatch({ type: 'REMOVE_ITEM', payload: id });
   };
 
   const handleTypeOfPrint = (itemId, alignment) => {
-    console.log("itemid:" + itemId);
     dispatch({
-      type: "UPDATE_FILE",
+      type: 'UPDATE_PRINT_TYPE',
       payload: {
         itemId,
         value: alignment,
@@ -70,7 +69,7 @@ export const FormProvider = ({ children }) => {
   };
   const handlePrintChoiceChange = (e, options) => {
     dispatch({
-      type: "UPDATE_FILE",
+      type: 'UPDATE_FILE',
       payload: {
         name: e.target.name,
         itemId: options.itemId,
@@ -91,38 +90,38 @@ export const FormProvider = ({ children }) => {
   };
 
   const handleTelErr = (e) => {
-    let num = e.target.value.replaceAll("-", "");
-    if (num == "") {
+    let num = e.target.value.replaceAll('-', '');
+    if (num == '') {
       setErrMessages({
-        phone: "שדה חובה",
+        phone: 'שדה חובה',
       });
     }
     if (!validateTel.test(num)) {
       setErrMessages({
-        phone: "מספרים בלבד",
+        phone: 'מספרים בלבד',
       });
       return;
     } else if (num.length != 10) {
       setErrMessages({
-        phone: "לפחות עשר מספרים",
+        phone: 'לפחות עשר מספרים',
       });
       return;
     }
     setErrMessages({
-      phone: "",
+      phone: '',
     });
   };
 
   const handleItemsChange = (e, id) => {
     dispatch({
-      type: "UPDATE_ITEM",
+      type: 'UPDATE_ITEM',
       payload: { id, name: e.target.name, value: e.target.value },
     });
   };
 
   const handleAddSubItem = (itemId) => {
     dispatch({
-      type: "ADD_SUB_ITEM",
+      type: 'ADD_SUB_ITEM',
       payload: {
         itemId,
         value: { subItemId: createUniqueId(), subItemCount: 0 },
@@ -132,14 +131,14 @@ export const FormProvider = ({ children }) => {
 
   const handleRemoveSubItem = (itemId, subItemId) => {
     dispatch({
-      type: "REMOVE_SUB_ITEM",
+      type: 'REMOVE_SUB_ITEM',
       payload: { itemId, subItemId },
     });
   };
 
   const handleUpdateSubitem = (e, itemId, subItemId) => {
     dispatch({
-      type: "UPDATE_SUB_ITEM",
+      type: 'UPDATE_SUB_ITEM',
       payload: {
         itemId,
         subItemId,
@@ -152,8 +151,8 @@ export const FormProvider = ({ children }) => {
   const handleRequired = (e) => {
     let newState = errMessages;
 
-    if (e.target.value == "") {
-      newState[e.target.name] = "שדה חובה";
+    if (e.target.value == '') {
+      newState[e.target.name] = 'שדה חובה';
     }
     setErrMessages(newState);
   };
@@ -175,31 +174,51 @@ export const FormProvider = ({ children }) => {
     handleValidations(e);
 
     dispatch({
-      type: "UPDATE_CUSTOMER",
+      type: 'UPDATE_CUSTOMER',
       payload: { name: e.target.name, value: e.target.value },
     });
   };
 
-  const handleFileUpload = (e) => {
-    const { name, files } = e.target;
-    console.log(e.target);
+  const handleFileUpload = (itemId, base64, type, subType, text) => {
+    dispatch({
+      type: 'UPDATE_FILE',
+      payload: {
+        itemId,
+        value: base64,
+        printType: type,
+        subType,
+        noPrint: {
+          text,
+        },
+      },
+    });
   };
 
   const handleCategoryUpdate = (e, id, category) => {
     dispatch({
-      type: "UPDATE_ITEM",
-      payload: { name: "category", id, value: category },
+      type: 'UPDATE_ITEM',
+      payload: { name: 'category', id, value: category },
     });
   };
 
   function handleCalculateTotalPrice() {
-    dispatch({ type: "CALCULATE_PRICE" });
+    dispatch({ type: 'CALCULATE_PRICE' });
   }
 
   function handleUpdateOrderNotes(e) {
-    dispatch({ type: "UPDATE_ORDER_NOTES", payload: e.target.value });
+    dispatch({ type: 'UPDATE_ORDER_NOTES', payload: e.target.value });
   }
 
+  function handleCustomText(itemId, text) {
+    dispatch({
+      type: 'UPDATE_FILE',
+      payload: {
+        itemId,
+        printType: 4,
+        noPrint: text,
+      },
+    });
+  }
   return (
     <FormContext.Provider
       value={{
@@ -226,8 +245,8 @@ export const FormProvider = ({ children }) => {
         handleUpdateOrderNotes,
         handlePrintChoiceChange,
         handleTypeOfPrint,
-      }}
-    >
+        handleCustomText,
+      }}>
       {children}
     </FormContext.Provider>
   );

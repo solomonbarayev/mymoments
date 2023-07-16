@@ -64,21 +64,18 @@
   flex-direction: column;
   max-width: calc(768px + (16px * 2));
   width: 100%;
-  gap: 8px
+  gap: 8px;
 }
 
-.form__notes{
+.form__notes {
   font-size: 18px;
 }
 
-@media (max-width: 567.98px){
+@media (max-width: 567.98px) {
   .form__notes-container {
     padding: 0 15px;
   }
 }
-
-
-
 
 .form__add-btn {
   /* margin-top: 2em; */
@@ -183,7 +180,7 @@
     width: 100%;
     max-width: 100%;
   }
-  .form__dropzone-selections{
+  .form__dropzone-selections {
     max-width: 300px;
   }
 }
@@ -246,7 +243,14 @@
   margin-bottom: 75px;
 }
 
-.form__dropzone-selections{
+.form__dropzone-selections {
   display: flex;
   gap: 20px;
-width: 100%;}
+  width: 100%;
+}
+
+.form__two_antdropzone {
+  display: flex;
+  gap: 3%;
+  justify-content: center;
+}

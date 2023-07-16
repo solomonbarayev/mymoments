@@ -13,29 +13,31 @@ export const initialState = {
           subItemCount: 0,
         },
       ],
-      typeOfPrint: "",
+      typeOfPrint: '',
       prints: {
         frontPrint: {
-          printSize: "",
-          file: "",
+          printSize: '',
+          file: '',
         },
         backPrint: {
-          printSize: "",
-          file: "",
+          printSize: '',
+          file: '',
         },
-        noPrint: "",
+        noPrint: {
+          text: '',
+        },
       },
     },
   ],
   customerData: {},
   shipping: false,
   totalPrice: 0,
-  orderNotes: "",
+  orderNotes: '',
 };
 
-export const printSizes = ["סמל קטן (כיס 8 סמ)", "(A4)סמל גדול"];
+export const printSizes = ['סמל קטן (כיס 8 סמ)', '(A4)סמל גדול'];
 export const printTypes = [
-  "בחירת קובץ להדפס קידמי",
-  "בחירת קובץ להדפס אחורי",
-  "הדפסה ללא בחירת קובץ",
+  'בחירת קובץ להדפס קידמי',
+  'בחירת קובץ להדפס אחורי',
+  'הדפסה ללא בחירת קובץ',
 ];
