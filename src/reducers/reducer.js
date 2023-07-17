@@ -50,7 +50,7 @@ const reducer = (state, action) => {
       ...state,
       items: state.items.map((item) => {
         if (item.id === action.payload.itemId) {
-          item.subItems.push(action.payload.value);
+          item.subItems = [...item.subItems, action.payload.value];
         }
         return item;
       }),
