@@ -1,33 +1,12 @@
 import { data } from "../data/data";
+import { createEmptyItem } from "../constants/constants";
 
 const reducer = (state, action) => {
   if (action.type === "ADD_ITEM") {
+    const { itemId, subItemId } = action.payload;
     const newState = {
       ...state,
-
-      items: [
-        ...state.items,
-        {
-          id: action.payload.itemId,
-          itemCount: 0,
-          subItems: [{ subItemId: action.payload.subItemId, subItemCount: 0 }],
-          typeOfPrint: "",
-          fileUploaded: false,
-          prints: {
-            frontPrint: {
-              printSize: "",
-              file: "",
-            },
-            backPrint: {
-              printSize: "",
-              file: "",
-            },
-            noPrint: {
-              text: "",
-            },
-          },
-        },
-      ],
+      items: [...state.items, createEmptyItem(itemId, subItemId)],
     };
     return newState;
   }

@@ -2,34 +2,36 @@ export function createUniqueId() {
   return Math.floor(Math.random() * 100000);
 }
 
-export const initialState = {
-  items: [
-    {
-      id: createUniqueId(),
-      itemCount: 0,
-      subItems: [
-        {
-          subItemId: createUniqueId(),
-          subItemCount: 0,
-        },
-      ],
-      typeOfPrint: "",
-      fileUploaded: false,
-      prints: {
-        frontPrint: {
-          printSize: "",
-          file: "",
-        },
-        backPrint: {
-          printSize: "",
-          file: "",
-        },
-        noPrint: {
-          text: "",
-        },
+export function createEmptyItem(newItemId, newSubItemId) {
+  return {
+    id: newItemId || createUniqueId(),
+    itemCount: 0,
+    subItems: [
+      {
+        subItemId: newSubItemId || createUniqueId(),
+        subItemCount: 0,
+      },
+    ],
+    typeOfPrint: "",
+    fileUploaded: false,
+    prints: {
+      frontPrint: {
+        printSize: "",
+        file: "",
+      },
+      backPrint: {
+        printSize: "",
+        file: "",
+      },
+      noPrint: {
+        text: "",
       },
     },
-  ],
+  };
+}
+
+export const initialState = {
+  items: [createEmptyItem()],
   customerData: {},
   shipping: false,
   totalPrice: 0,
