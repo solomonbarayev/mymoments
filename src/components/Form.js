@@ -123,7 +123,7 @@ const Form = () => {
                   width: "100%",
                   textAlign: "center",
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "space-between",
                   alignItems: "center",
                   alignContent: "center",
                 }}
@@ -135,6 +135,8 @@ const Form = () => {
                     fontWeight: "bold",
                     padding: "0 30px",
                     lineHeight: "1.7em",
+                    flexGrow: 1,
+                    textAlign: "left",
                   }}
                   className="form__subtitle"
                 >
