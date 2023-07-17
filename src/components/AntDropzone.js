@@ -20,6 +20,7 @@ function AntDropzone({ itemId, type, typeNum, subType }) {
     <>
       <Dragger
         {...props}
+        maxCount={1}
         onChange={(info) => {
           const { status } = info.file;
           if (status !== "uploading") {
