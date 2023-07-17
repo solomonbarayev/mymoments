@@ -63,12 +63,7 @@ const Form = () => {
     if (index != 0) {
       const element = document.getElementById(expanded);
       console.log(element);
-      // element?.scrollIntoView({
-      //   behavior: "auto",
-      //   block: "center",
-      //   inline: "center",
-      // });
-      const yOffset = -100;
+      const yOffset = 50;
       const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
 
       window.scrollTo({ top: y, behavior: "smooth" });
