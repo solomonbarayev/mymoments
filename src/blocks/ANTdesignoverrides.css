@@ -26,3 +26,7 @@ span.ant-upload-wrapper {
   .anticon:hover {
   color: #179727;
 }
+
+.ant-tooltip {
+  display: none !important;
+}
