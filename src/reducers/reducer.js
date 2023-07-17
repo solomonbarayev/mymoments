@@ -11,6 +11,21 @@ const reducer = (state, action) => {
           id: action.payload.itemId,
           itemCount: 0,
           subItems: [{ subItemId: action.payload.subItemId, subItemCount: 0 }],
+          typeOfPrint: "",
+          fileUploaded: false,
+          prints: {
+            frontPrint: {
+              printSize: "",
+              file: "",
+            },
+            backPrint: {
+              printSize: "",
+              file: "",
+            },
+            noPrint: {
+              text: "",
+            },
+          },
         },
       ],
     };
