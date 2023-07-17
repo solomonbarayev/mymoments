@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { useForm } from "../contexts/FormContext";
+import React, { useEffect } from 'react';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { useForm } from '../contexts/FormContext';
 
-const ToggleButtons = ({ itemId }) => {
-  const [alignment, setAlignment] = React.useState("front");
+const ToggleButtons = ({ itemId, category }) => {
+  const [alignment, setAlignment] = React.useState('front');
   const { handleTypeOfPrint, handleRemoveAllFiles } = useForm();
   const handleChange = (event, newAlignment) => {
     handleRemoveAllFiles(itemId);
@@ -16,6 +16,8 @@ const ToggleButtons = ({ itemId }) => {
     handleTypeOfPrint(itemId, alignment);
   }, [alignment]);
 
+  console.log(category);
+
   return (
     <ToggleButtonGroup
       color="primary"
@@ -23,11 +25,14 @@ const ToggleButtons = ({ itemId }) => {
       exclusive
       onChange={handleChange}
       aria-label="Platform"
-      className="form__toggle"
-    >
+      className="form__toggle">
       <ToggleButton value="front">הדפס קדימה</ToggleButton>
-      <ToggleButton value="back">הדפס אחורה</ToggleButton>
-      <ToggleButton value="doubleSided">הדפס דו-צדדי</ToggleButton>
+      {category !== 'כובעים' && (
+        <ToggleButton value="back">הדפס אחורה</ToggleButton>
+      )}
+      {category !== 'כובעים' && (
+        <ToggleButton value="doubleSided">הדפס דו-צדדי</ToggleButton>
+      )}
       <ToggleButton value="exclude">התאמה אישית</ToggleButton>
     </ToggleButtonGroup>
   );

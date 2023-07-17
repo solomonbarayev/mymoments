@@ -32,8 +32,16 @@ function AntDropzone({ itemId, type, typeNum, subType }) {
             reader.readAsDataURL(info.file.originFileObj);
             reader.onload = function () {
               handleFileUpload(itemId, reader.result, typeNum, subType);
+
+              // message.success(`${info.file.name} קובץ הועלה בהצלחה `);
             };
+          }
+          if (status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully.`);
+          } else if (status === 'error') {
+            // message.error(`${info.file.name} file upload failed.`);
           } else if (status === 'removed') {
+            // handleFileUpload(itemId, null, typeNum, subType);
             setTimeout(
               () => handleFileUpload(itemId, null, typeNum, subType),
               300

@@ -56,7 +56,11 @@ const ProductDetails = ({ id }) => {
           להדפיס. יש לציין בפירוט את גודל ההדפס (הדפס כיס: 8 סמ או הדפס גדול A4
           ) ואת צדדי ההדפס.
         </p>
-        <AntDTextArea itemId={id} handleChange={handleNoPrintText} />
+        <AntDTextArea
+          itemId={id}
+          handleChange={handleNoPrintText}
+          category={item.category}
+        />
       </div>
     );
   }
@@ -107,12 +111,15 @@ const ProductDetails = ({ id }) => {
         בחר את המוצר שברצונך להזמין
       </span>
       <CategoryPicker id={id} />
-      {checkIfCategory() ? <ToggleButtons itemId={id} /> : null}
+      {checkIfCategory() ? (
+        <ToggleButtons itemId={id} category={item.category} />
+      ) : null}
       {checkIftypeOfPrint() == 1 && (
         <AntDropzone
           itemId={id}
           type={getTypeOfPrint()}
           typeNum={checkIftypeOfPrint()}
+          category={item.category}
         />
       )}
       {checkIftypeOfPrint() == 2 && (
@@ -125,7 +132,7 @@ const ProductDetails = ({ id }) => {
       {checkIftypeOfPrint() == 3 && twoAntDropzone(id)}
       {checkIftypeOfPrint() == 4 && ifNoPrint()}
 
-      {checkIftypeOfPrint() && (
+      {item.fileUploaded && (
         <>
           <div className="form__count-input">
             <Input

@@ -134,10 +134,12 @@ const reducer = (state, action) => {
             }
           }
           if (action.payload.printType == 4) {
-            console.log('in 4');
-            console.log(action.payload.noPrint);
             item.prints.noPrint.text = action.payload.noPrint;
             item.fileUploaded = item.prints.noPrint.text != '' ? true : false;
+          }
+          // console.log(action.payload.value);
+          if (action.payload.value == null) {
+            item.fileUploaded = false;
           }
         }
         return item;
