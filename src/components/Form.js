@@ -130,7 +130,7 @@ const Form = () => {
               >
                 <Typography
                   sx={{
-                    marginLeft: "auto",
+                    // marginLeft: "auto",
                     fontSize: "1.1em",
                     fontWeight: "bold",
                     padding: "0 30px",
