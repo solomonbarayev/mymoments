@@ -75,6 +75,7 @@ const reducer = (state, action) => {
                 ...item.prints.frontPrint,
                 file: action.payload.value,
               };
+              item.fileUploaded = true;
             } else {
               // only updating print size
               item.prints.frontPrint = {
@@ -89,6 +90,7 @@ const reducer = (state, action) => {
                 ...item.prints.backPrint,
                 file: action.payload.value,
               };
+              item.fileUploaded = true;
             } else {
               // only updating print size
               item.prints.backPrint = {
@@ -105,6 +107,10 @@ const reducer = (state, action) => {
                   ...item.prints.frontPrint,
                   file: action.payload.value,
                 };
+                //check if both front and back have files uploaded
+                if (item.prints.backPrint.file != "") {
+                  item.fileUploaded = true;
+                }
               } else {
                 item.prints.frontPrint = {
                   ...item.prints.frontPrint,
@@ -118,6 +124,10 @@ const reducer = (state, action) => {
                   ...item.prints.backPrint,
                   file: action.payload.value,
                 };
+                //check if both front and back have files uploaded
+                if (item.prints.frontPrint.file != "") {
+                  item.fileUploaded = true;
+                }
               } else {
                 item.prints.backPrint = {
                   ...item.prints.backPrint,
@@ -129,6 +139,7 @@ const reducer = (state, action) => {
           if (action.payload.printType == 4) {
             console.log(action.payload.noPrint);
             item.prints.noPrint.text = action.payload.noPrint;
+            item.fileUploaded = true;
           }
         }
         return item;

@@ -266,3 +266,7 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.form__two_antdropzone .ant-upload-text {
+  font-size: 14px;
+}

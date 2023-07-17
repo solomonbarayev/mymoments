@@ -122,7 +122,7 @@ const ProductDetails = ({ id }) => {
       {checkIftypeOfPrint() == 3 && twoAntDropzone(id)}
       {checkIftypeOfPrint() == 4 && ifNoPrint()}
 
-      {checkIftypeOfPrint() && (
+      {item && item.fileUploaded && (
         <>
           <div className="form__count-input">
             <Input
