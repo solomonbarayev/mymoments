@@ -63,13 +63,22 @@ const Form = () => {
     if (index != 0) {
       const element = document.getElementById(expanded);
       console.log(element);
-      // const yOffset = -50;
-      // const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-      // setTimeout(() => window.scrollTo({ top: y, behavior: "smooth" }), 1000);
-      setTimeout(
-        () => element?.scrollIntoView({ behavior: "smooth", block: "start" }),
-        300
-      );
+      //screen is less than 600px
+      if (window.innerWidth < 600) {
+        setTimeout(
+          () => element?.scrollIntoView({ behavior: "smooth", block: "start" }),
+          300
+        );
+      } else {
+        setTimeout(
+          () =>
+            element?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            }),
+          300
+        );
+      }
     }
     setIndex(index + 1);
   }, [expanded]);
