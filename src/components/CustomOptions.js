@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import Dropdown from './Dropdown';
-import { data } from '../data/data';
-import { useForm } from '../contexts/FormContext';
-import Input from './Input';
-import { BsDashCircle, BsPlusCircle } from 'react-icons/bs';
+import React, { useState } from "react";
+import Dropdown from "./Dropdown";
+import { data } from "../data/data";
+import { useForm } from "../contexts/FormContext";
+import Input from "./Input";
+import { BsDashCircle, BsPlusCircle } from "react-icons/bs";
 
 const colors = data.colors;
 const sizes = data.sizes;
 
 const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
-  const useColors = itemCount > 10 ? colors : ['שחור', 'לבן'];
+  const useColors = itemCount > 10 ? colors : ["שחור", "לבן"];
   const { items, handleUpdateSubitem, handleAddSubItem, handleRemoveSubItem } =
     useForm();
   const item = items.filter((item) => itemId == item.id)[0];
@@ -24,21 +24,13 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
     <>
       <section className="options" key={subItemId}>
         <div className="options__btn-container">
-          {/* {item.subItems.length != 1 && (
+          {item.subItems.length != 1 && (
             <button
               type="button"
               className="form__sub-item-btn form__sub-item-btn_type_remove"
               onClick={() => handleRemoveSubItem(itemId, subItemId)}
             >
-            <BsDashCircle style={{ color: "#19448b" }} size={20} />
-            </button>
-          )} */}
-          {item.subItems.length != 1 && (
-            <button
-              type="button"
-              className="form__sub-item-btn form__sub-item-btn_type_remove"
-              onClick={() => handleRemoveSubItem(itemId, subItemId)}>
-              <BsDashCircle style={{ color: 'rgb(181 52 52)' }} size={20} />
+              <BsDashCircle style={{ color: "rgb(181 52 52)" }} size={20} />
             </button>
           )}
         </div>
@@ -81,9 +73,10 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
             onClick={(e) => {
               e.preventDefault();
               handleAddSubItem(itemId);
-            }}>
+            }}
+          >
             הוסף מידות/צבעים
-            <BsPlusCircle style={{ color: '#19448b' }} size={20} />
+            <BsPlusCircle style={{ color: "#19448b" }} size={20} />
           </button>
         </div>
       ) : null}

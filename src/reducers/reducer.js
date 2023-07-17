@@ -45,6 +45,7 @@ const reducer = (state, action) => {
   }
 
   if (action.type === "ADD_SUB_ITEM") {
+    console.log("action.payload", action.payload);
     const newState = {
       ...state,
       items: state.items.map((item) => {

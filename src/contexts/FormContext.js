@@ -120,11 +120,12 @@ export const FormProvider = ({ children }) => {
   };
 
   const handleAddSubItem = (itemId) => {
+    const subItemId = createUniqueId();
     dispatch({
       type: "ADD_SUB_ITEM",
       payload: {
         itemId,
-        value: { subItemId: createUniqueId(), subItemCount: 0 },
+        value: { subItemId, subItemCount: 0 },
       },
     });
   };

@@ -2,13 +2,13 @@ export function createUniqueId() {
   return Math.floor(Math.random() * 100000);
 }
 
-export function createEmptyItem(newItemId, newSubItemId) {
+export function createEmptyItem(newItemId, newSubItemId = createUniqueId()) {
   return {
     id: newItemId || createUniqueId(),
     itemCount: 0,
     subItems: [
       {
-        subItemId: newSubItemId || createUniqueId(),
+        subItemId: newSubItemId,
         subItemCount: 0,
       },
     ],
