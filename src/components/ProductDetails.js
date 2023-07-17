@@ -81,7 +81,6 @@ const ProductDetails = ({ id }) => {
   const getTypeOfPrint = () => {
     return typeOfPrint == "front" ? "הדפס קידמי" : "הדפס אחורי";
   };
-  console.log(getTypeOfPrint());
   function handleCheckCustomOptions() {
     let filled = true;
 
@@ -98,8 +97,6 @@ const ProductDetails = ({ id }) => {
     console.log(bool);
     return bool;
   }
-
-  console.log(checkIftypeOfPrint());
 
   return (
     <section className="form__print-container">
