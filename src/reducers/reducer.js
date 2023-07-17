@@ -139,9 +139,7 @@ const reducer = (state, action) => {
           if (action.payload.printType == 4) {
             console.log(action.payload.noPrint);
             item.prints.noPrint.text = action.payload.noPrint;
-            if (item.prints.noPrint.text != "") {
-              item.fileUploaded = true;
-            }
+            item.fileUploaded = item.prints.noPrint.text != "" ? true : false;
           }
         }
         return item;
