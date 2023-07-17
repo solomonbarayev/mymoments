@@ -68,7 +68,7 @@ const Form = () => {
       // setTimeout(() => window.scrollTo({ top: y, behavior: "smooth" }), 1000);
       setTimeout(
         () => element?.scrollIntoView({ behavior: "smooth", block: "start" }),
-        3000
+        1500
       );
     }
     setIndex(index + 1);
