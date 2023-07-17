@@ -66,7 +66,10 @@ const Form = () => {
       // const yOffset = -50;
       // const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
       // setTimeout(() => window.scrollTo({ top: y, behavior: "smooth" }), 1000);
-      element?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(
+        () => element?.scrollIntoView({ behavior: "smooth", block: "start" }),
+        3000
+      );
     }
     setIndex(index + 1);
   }, [expanded]);

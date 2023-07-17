@@ -267,10 +267,6 @@
   gap: 10px;
 }
 
-.form__two_antdropzone .ant-upload-text {
-  font-size: 14px;
-}
-
 @media (max-width: 585px) {
   .form__two_antdropzone {
     gap: 45px;
