@@ -1,10 +1,13 @@
-import React from 'react';
-import { Input } from 'antd';
+import React from "react";
+import { Input } from "antd";
 const { TextArea } = Input;
 
-const AntDTextArea = ({ itemId, handleChange }) => (
+const AntDTextArea = ({ handleChange }) => (
   <TextArea
-    onChange={(e) => handleChange(itemId, e.target.value)}
+    onChange={(e) => {
+      console.log(e.target.value);
+      handleChange(e.target.value);
+    }}
     rows={6}
     className="form__notes"
   />

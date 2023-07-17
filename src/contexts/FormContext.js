@@ -206,8 +206,9 @@ export const FormProvider = ({ children }) => {
     dispatch({ type: "CALCULATE_PRICE" });
   }
 
-  function handleUpdateOrderNotes(e) {
-    dispatch({ type: "UPDATE_ORDER_NOTES", payload: e.target.value });
+  function handleUpdateOrderNotes(text) {
+    console.log("in here");
+    dispatch({ type: "UPDATE_ORDER_NOTES", payload: text });
   }
 
   function handleCustomText(itemId, text) {

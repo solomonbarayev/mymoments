@@ -56,6 +56,22 @@ const Form = () => {
     setExpanded(el);
   };
 
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    //scroll into view the item with the id ==expanded
+    if (index != 0) {
+      const element = document.getElementById(expanded);
+      console.log(element);
+      element?.scrollIntoView({
+        behavior: "auto",
+        block: "center",
+        inline: "center",
+      });
+    }
+    setIndex(index + 1);
+  }, [expanded]);
+
   return (
     <form className="form">
       <section className="form__section form__section_type_customer">
@@ -106,7 +122,7 @@ const Form = () => {
       </section>
       <div className="form__products-container">
         {itemsIds.map((el, i) => (
-          <div className="form__accordion" key={el}>
+          <div className="form__accordion" id={el} key={el}>
             <Accordion
               sx={{
                 boxShadow: "none",
