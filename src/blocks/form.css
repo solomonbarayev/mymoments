@@ -258,3 +258,11 @@
   gap: 3%;
   justify-content: center;
 }
+
+.form__file-uploader {
+  /* padding-bottom: 20px; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

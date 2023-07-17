@@ -4,6 +4,8 @@ import ToggleButtons from "./ToggleButtons";
 import { useForm } from "../contexts/FormContext";
 import Dropdown from "./Dropdown";
 import { printSizes, printTypes } from "../constants/constants";
+import RadioGroup from "./RadioGroup";
+
 const { Dragger } = Upload;
 const props = {
   name: "file",
@@ -17,7 +19,7 @@ const props = {
 function AntDropzone({ itemId, type, typeNum, subType }) {
   const { handleFileUpload } = useForm();
   return (
-    <>
+    <div className="form__file-uploader">
       <Dragger
         {...props}
         maxCount={1}
@@ -47,7 +49,13 @@ function AntDropzone({ itemId, type, typeNum, subType }) {
           לחץ לבחירת תמונת ההדפסה או גרור את התמונה
         </p>
       </Dragger>
-    </>
+      <RadioGroup
+        itemId={itemId}
+        type={type}
+        typeNum={typeNum}
+        subType={subType}
+      />
+    </div>
   );
 }
 
