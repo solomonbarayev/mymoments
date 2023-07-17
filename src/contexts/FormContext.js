@@ -220,6 +220,14 @@ export const FormProvider = ({ children }) => {
       },
     });
   }
+
+  function handleRemoveAllFiles(itemId) {
+    dispatch({
+      type: "REMOVE_ALL_FILES",
+      payload: { itemId },
+    });
+  }
+
   return (
     <FormContext.Provider
       value={{
@@ -247,6 +255,7 @@ export const FormProvider = ({ children }) => {
         handlePrintChoiceChange,
         handleTypeOfPrint,
         handleCustomText,
+        handleRemoveAllFiles,
       }}
     >
       {children}

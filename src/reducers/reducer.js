@@ -137,10 +137,25 @@ const reducer = (state, action) => {
             }
           }
           if (action.payload.printType == 4) {
-            console.log(action.payload.noPrint);
             item.prints.noPrint.text = action.payload.noPrint;
             item.fileUploaded = item.prints.noPrint.text != "" ? true : false;
           }
+        }
+        return item;
+      }),
+    };
+    return newState;
+  }
+
+  if (action.type === "REMOVE_ALL_FILES") {
+    const newState = {
+      ...state,
+      items: state.items.map((item) => {
+        if (item.id == action.payload.itemId) {
+          item.fileUploaded = false;
+          item.prints.frontPrint.file = "";
+          item.prints.backPrint.file = "";
+          item.prints.noPrint.text = "";
         }
         return item;
       }),
