@@ -146,6 +146,10 @@
   justify-content: space-between;
 }
 
+.form__category-item {
+  cursor: pointer;
+}
+
 .form__button_type_category {
   width: calc((100% / 3) - 0.7em);
   /* super light gray border */
