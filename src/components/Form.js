@@ -63,10 +63,10 @@ const Form = () => {
     if (index != 0) {
       const element = document.getElementById(expanded);
       console.log(element);
-      const yOffset = -50;
-      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-
-      setTimeout(() => window.scrollTo({ top: y, behavior: "smooth" }), 1000);
+      // const yOffset = -50;
+      // const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+      // setTimeout(() => window.scrollTo({ top: y, behavior: "smooth" }), 1000);
+      element?.scrollIntoView({ behavior: "smooth" });
     }
     setIndex(index + 1);
   }, [expanded]);
