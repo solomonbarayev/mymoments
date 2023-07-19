@@ -60,7 +60,9 @@ export const FormValidationProvider = ({ children }) => {
   };
 
   return (
-    <FormValidationContext.Provider value={{ errors, handleValidations }}>
+    <FormValidationContext.Provider
+      value={{ errors, handleValidations, handleTelErr, handleRequired }}
+    >
       {children}
     </FormValidationContext.Provider>
   );

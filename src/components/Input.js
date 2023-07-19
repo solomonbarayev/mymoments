@@ -9,7 +9,7 @@ const Input = ({
   name,
   label,
   type,
-  validationMessage,
+  validationMessage = "",
   maxLength,
 }) => {
   return (
@@ -31,6 +31,8 @@ const Input = ({
         onChange={handleChange}
         type={type ? type : "text"}
         inputProps={{ maxLength: maxLength }}
+        helperText={validationMessage}
+        error={validationMessage != ""}
       />
       {validationMessage ? (
         <span className="form__input-validation">{validationMessage}</span>
