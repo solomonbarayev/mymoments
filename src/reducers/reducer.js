@@ -67,15 +67,21 @@ const reducer = (state, action) => {
   }
 
   if (action.type === "UPDATE_FILE") {
+    console.log(action.payload);
     const newState = {
       ...state,
       items: state.items.map((item) => {
         if (item.id == action.payload.itemId) {
           if (action.payload.printType == 1) {
             //check if uploading print or print size
+            console.log(action.payload.category);
             if (action.payload.value != "") {
               item.prints.frontPrint = {
-                ...item.prints.frontPrint,
+                // ...item.prints.frontPrint,
+                printSize:
+                  action.payload.category == "כובעים"
+                    ? 1
+                    : item.prints.frontPrint.printSize,
                 file: action.payload.value == null ? "" : action.payload.value,
               };
               item.fileUploaded = true;
@@ -142,11 +148,12 @@ const reducer = (state, action) => {
             }
           }
           if (action.payload.printType == 4) {
+            console.log(action.payload.value);
             item.prints.noPrint.text = action.payload.noPrint;
             item.fileUploaded = item.prints.noPrint.text != "" ? true : false;
           }
           // console.log(action.payload.value);
-          if (action.payload.value == null) {
+          if (action.payload.value == null && action.payload.printType != 4) {
             item.fileUploaded = false;
           }
         }
@@ -165,6 +172,8 @@ const reducer = (state, action) => {
           item.prints.frontPrint.file = "";
           item.prints.backPrint.file = "";
           item.prints.noPrint.text = "";
+          item.prints.frontPrint.printSize = "";
+          item.prints.backPrint.printSize = "";
         }
         return item;
       }),

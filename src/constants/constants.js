@@ -44,3 +44,5 @@ export const printTypes = [
   "בחירת קובץ להדפס אחורי",
   "הדפסה ללא בחירת קובץ",
 ];
+
+export const validateTel = /^[0-9]*$/;

@@ -20,20 +20,14 @@ cats = cats.map((cat) => cat.name);
 
 const Form = () => {
   const [showAddress, setShowAddress] = useState(false);
-  const [categories, setCategories] = useState(cats);
-  const [colors, setColors] = useState(cols);
-  const [sizes, setSizes] = useState(siz);
+
   const {
     itemValues,
     customerValues,
-    handleItemsChange,
     handleCustomerChange,
-    handleFileUpload,
     itemsIds,
     addItem,
     removeItem,
-    totalPrice,
-    handleCalculateTotalPrice,
     handleShippingChange,
     handleUpdateOrderNotes,
   } = useForm();
@@ -46,10 +40,6 @@ const Form = () => {
   useEffect(() => {
     setExpanded(itemsIds[itemsIds.length - 1]);
   }, [itemValues.length]);
-
-  useEffect(() => {
-    handleCalculateTotalPrice();
-  }, [itemValues]);
 
   const removeAndExpandPrev = (el) => {
     console.log(el);

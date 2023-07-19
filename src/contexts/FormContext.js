@@ -8,35 +8,16 @@ import React, {
 } from "react";
 import reducer from "../reducers/reducer";
 import { initialState, createUniqueId } from "../constants/constants";
+import { useValidation } from "./FormValidation";
 
 const FormContext = createContext();
 
-const initalIndex = createUniqueId();
-
-const validateTel = /^[0-9]*$/;
-
 export const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [isTelError, setIsTelError] = useState(false);
-  const [telValidationMess, setTelValidationMess] = useState("");
-  const [requiredMessages, setRequiredMessages] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    city: "",
-  });
+
+  const { handleValidations } = useValidation();
 
   console.log(state);
-
-  const [errMessages, setErrMessages] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    city: "",
-    phone: "",
-  });
 
   const {
     itemsIds,
@@ -65,51 +46,6 @@ export const FormProvider = ({ children }) => {
         itemId,
         value: alignment,
       },
-    });
-  };
-
-  const handlePrintChoiceChange = (e, options) => {
-    dispatch({
-      type: "UPDATE_FILE",
-      payload: {
-        name: e.target.name,
-        itemId: options.itemId,
-        printType: options.printType,
-        printSize: options.printSize,
-        noPrint: {
-          front: {
-            wording: options.noPrint.front.wording,
-            size: options.noPrint.front.printSize,
-          },
-          back: {
-            wording: options.noPrint.back.wording,
-            size: options.noPrint.back.printSize,
-          },
-        },
-      },
-    });
-  };
-
-  const handleTelErr = (e) => {
-    let num = e.target.value.replaceAll("-", "");
-    if (num == "") {
-      setErrMessages({
-        phone: "שדה חובה",
-      });
-    }
-    if (!validateTel.test(num)) {
-      setErrMessages({
-        phone: "מספרים בלבד",
-      });
-      return;
-    } else if (num.length != 10) {
-      setErrMessages({
-        phone: "לפחות עשר מספרים",
-      });
-      return;
-    }
-    setErrMessages({
-      phone: "",
     });
   };
 
@@ -157,30 +93,8 @@ export const FormProvider = ({ children }) => {
     });
   };
 
-  const handleRequired = (e) => {
-    let newState = errMessages;
-
-    if (e.target.value == "") {
-      newState[e.target.name] = "שדה חובה";
-    }
-    setErrMessages(newState);
-  };
-
-  const handleValidations = (e) => {
-    const { name } = e.target;
-    const validationObject = {
-      phone: handleTelErr,
-      firstName: handleRequired,
-      lastName: handleRequired,
-      address: handleRequired,
-      city: handleRequired,
-      email: handleRequired,
-    };
-    validationObject[name]?.(e);
-  };
-
   const handleCustomerChange = (e) => {
-    handleValidations(e);
+    handleValidations(e); //enable from useValidation hook
 
     dispatch({
       type: "UPDATE_CUSTOMER",
@@ -188,7 +102,15 @@ export const FormProvider = ({ children }) => {
     });
   };
 
-  const handleFileUpload = (itemId, base64, type, subType, text, printSize) => {
+  const handleFileUpload = ({
+    itemId,
+    base64,
+    type,
+    subType,
+    text,
+    printSize,
+    category,
+  }) => {
     dispatch({
       type: "UPDATE_FILE",
       payload: {
@@ -196,6 +118,7 @@ export const FormProvider = ({ children }) => {
         value: base64,
         printType: type,
         subType,
+        category,
         noPrint: {
           text,
         },
@@ -210,10 +133,6 @@ export const FormProvider = ({ children }) => {
       payload: { name: "category", id, value: category },
     });
   };
-
-  function handleCalculateTotalPrice() {
-    dispatch({ type: "CALCULATE_PRICE" });
-  }
 
   function handleUpdateOrderNotes(text) {
     console.log("in here");
@@ -251,19 +170,13 @@ export const FormProvider = ({ children }) => {
         itemsIds: state.items.map((el) => el.id),
         addItem,
         removeItem,
-        totalPrice,
-        telValidationMess,
-        isTelError,
-        requiredMessages,
         handleCategoryUpdate,
         items: state.items,
         createUniqueId,
         handleUpdateSubitem,
         handleAddSubItem,
         handleRemoveSubItem,
-        handleCalculateTotalPrice,
         handleUpdateOrderNotes,
-        handlePrintChoiceChange,
         handleTypeOfPrint,
         handleCustomText,
         handleRemoveAllFiles,

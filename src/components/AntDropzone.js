@@ -1,25 +1,25 @@
-import { InboxOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
-import ToggleButtons from './ToggleButtons';
-import { useForm } from '../contexts/FormContext';
-import Dropdown from './Dropdown';
-import { printSizes, printTypes } from '../constants/constants';
-import RadioGroup from './RadioGroup';
-import { useEffect } from 'react';
+import { InboxOutlined } from "@ant-design/icons";
+import { message, Upload } from "antd";
+import ToggleButtons from "./ToggleButtons";
+import { useForm } from "../contexts/FormContext";
+import Dropdown from "./Dropdown";
+import { printSizes, printTypes } from "../constants/constants";
+import RadioGroup from "./RadioGroup";
+import { useEffect } from "react";
 
 const { Dragger } = Upload;
 const props = {
-  name: 'file',
+  name: "file",
   // multiple: false,
   // action: "#",
   onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
+    console.log("Dropped files", e.dataTransfer.files);
   },
 };
 
-function AntDropzone({ itemId, type, typeNum, subType }) {
+function AntDropzone({ itemId, type, typeNum, subType, category }) {
   const { handleFileUpload } = useForm();
-
+  console.log(category);
   return (
     <div className="form__file-uploader">
       <Dragger
@@ -27,27 +27,35 @@ function AntDropzone({ itemId, type, typeNum, subType }) {
         maxCount={1}
         onChange={(info) => {
           const { status } = info.file;
-          if (status !== 'uploading') {
+          if (status !== "uploading") {
             var reader = new FileReader();
             reader.readAsDataURL(info.file.originFileObj);
             reader.onload = function () {
-              handleFileUpload(itemId, reader.result, typeNum, subType);
+              handleFileUpload({
+                itemId,
+                base64: reader.result,
+                type: typeNum,
+                subType,
+                category,
+              });
 
               // message.success(`${info.file.name} קובץ הועלה בהצלחה `);
             };
           }
-          if (status === 'done') {
+          if (status === "done") {
             message.success(`${info.file.name} file uploaded successfully.`);
-          } else if (status === 'error') {
+          } else if (status === "error") {
             // message.error(`${info.file.name} file upload failed.`);
-          } else if (status === 'removed') {
+          } else if (status === "removed") {
             // handleFileUpload(itemId, null, typeNum, subType);
             setTimeout(
-              () => handleFileUpload(itemId, null, typeNum, subType),
+              () =>
+                handleFileUpload({ itemId, base64: null, typeNum, subType }),
               300
             );
           }
-        }}>
+        }}
+      >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
@@ -62,6 +70,7 @@ function AntDropzone({ itemId, type, typeNum, subType }) {
         type={type}
         typeNum={typeNum}
         subType={subType}
+        category={category}
       />
     </div>
   );
