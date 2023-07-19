@@ -30,3 +30,27 @@ span.ant-upload-wrapper {
 .ant-tooltip {
   display: none !important;
 }
+
+:where(.css-w8mnev).ant-upload-wrapper
+  .ant-upload-list
+  .ant-upload-list-item-error
+  .ant-upload-list-item-name,
+:where(.css-w8mnev).ant-upload-wrapper
+  .ant-upload-list
+  .ant-upload-list-item-error
+  .ant-upload-icon
+  .anticon {
+  color: green;
+}
+:where(.css-w8mnev).ant-upload-wrapper
+  .ant-upload-list
+  .ant-upload-list-item-error
+  .ant-upload-list-item-actions
+  .anticon,
+:where(.css-w8mnev).ant-upload-wrapper
+  .ant-upload-list
+  .ant-upload-list-item-error
+  .ant-upload-list-item-actions
+  .anticon:hover {
+  color: green;
+}

@@ -4,7 +4,7 @@ import { data } from "../data/data.js";
 import Input from "./Input.js";
 import { useForm } from "../contexts/FormContext.js";
 import FileUpload from "./FileUpload.js";
-import { BsFillTrash3Fill } from "react-icons/bs";
+import { BsDoorOpen, BsFillTrash3Fill } from "react-icons/bs";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -34,6 +34,7 @@ const Form = () => {
     removeItem,
     totalPrice,
     handleCalculateTotalPrice,
+    handleShippingChange,
     handleUpdateOrderNotes,
   } = useForm();
   const [expanded, setExpanded] = useState(itemsIds[0]);
@@ -96,7 +97,7 @@ const Form = () => {
           />
           <Input
             name="phone"
-            maxlength="14"
+            maxLength={9}
             label="טלפון"
             formValues={customerValues.phone}
             handleChange={handleCustomerChange}
@@ -110,7 +111,10 @@ const Form = () => {
               type="checkbox"
               value={showAddress}
               htmlFor="show-address"
-              onChange={() => setShowAddress(!showAddress)}
+              onChange={(e) => {
+                setShowAddress(!showAddress);
+                handleShippingChange(!showAddress);
+              }}
             />
           </div>
           {showAddress && (

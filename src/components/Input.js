@@ -10,6 +10,7 @@ const Input = ({
   label,
   type,
   validationMessage,
+  maxLength,
 }) => {
   return (
     // <Box
@@ -29,6 +30,7 @@ const Input = ({
         value={formValues || ""}
         onChange={handleChange}
         type={type ? type : "text"}
+        inputProps={{ maxLength: maxLength }}
       />
       {validationMessage ? (
         <span className="form__input-validation">{validationMessage}</span>
