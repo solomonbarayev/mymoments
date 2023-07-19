@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from "react";
-import Dropdown from "./Dropdown.js";
 import { data } from "../data/data.js";
 import Input from "./Input.js";
-import { useForm } from "../contexts/FormContext.js";
-import FileUpload from "./FileUpload.js";
-import { BsDoorOpen, BsFillTrash3Fill } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import AntDropzone from "./AntDropzone.js";
-import ToggleButtons from "./ToggleButtons.js";
 import ProductDetails from "./ProductDetails.js";
-import TextArea from "./AntDTextArea.js";
+import { useForm } from "../contexts/FormContext.js";
+import { useValidation } from "../contexts/FormValidation.js";
 import AntDTextArea from "./AntDTextArea";
 let { categories: cats, colors: cols, sizes: siz } = data;
 cats = cats.map((cat) => cat.name);
 
 const Form = () => {
   const [showAddress, setShowAddress] = useState(false);
+  const { errors, itemErrors, subItemErrors } = useValidation();
 
   const {
     itemValues,
@@ -74,8 +71,77 @@ const Form = () => {
     setIndex(index + 1);
   }, [expanded]);
 
+  function checkCategoryForEach() {
+    return itemValues.every(
+      (item) => item.category != undefined && item.category != ""
+    );
+  }
+
+  function checkTypeOfPrintForEach() {
+    return itemValues.every(
+      (item) => item.typeOfPrint != undefined && item.typeOfPrint != ""
+    );
+  }
+
+  function checkAllSubItemSizeAndColor() {
+    //if there is an error, then add error with proper key name to subItemErrors object
+    return itemValues.every((item) =>
+      item.subItems.every(
+        (subItem) =>
+          subItem.size != undefined &&
+          subItem.size != "" &&
+          subItem.color != undefined &&
+          subItem.color != ""
+      )
+    );
+  }
+
+  function checkThatPrintHasSizeSelected() {
+    return itemValues.every((item) => {
+      if (item.typeOfPrint == "exclude") return true;
+      else {
+        const front = item.prints.frontPrint;
+        const back = item.prints.backPrint;
+        let result = false;
+        if (front.file !== "") {
+          result = front.printSize !== "";
+        }
+        if (back.file !== "") {
+          result = back.printSize !== "";
+        }
+        return result;
+      }
+    });
+  }
+
+  function checkErrorsObjEmpty(errObj) {
+    return Object.every((key) => errObj[key] == "" || errObj[key] == undefined);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    //check all the items have a category
+    checkCategoryForEach();
+    //check all the items have a typeOfPrint
+    checkTypeOfPrintForEach();
+    //check all the item have a size selected from radio buttons
+    checkThatPrintHasSizeSelected();
+    //check the itemErrors object is empty
+    checkErrorsObjEmpty(itemErrors);
+    //check that subItems have a size and color
+    checkAllSubItemSizeAndColor();
+    //if not then add error to subItemErrors object (refactor function to do this)
+    //check the subItemErrors object is empty
+    checkErrorsObjEmpty(subItemErrors);
+    //check the errors object is empty
+    checkErrorsObjEmpty(errors);
+    //if all the above are true, then submit the form (fetch to server)
+    console.log("submitted");
+  }
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <section className="form__section form__section_type_customer">
         <h2 className="form__title form__subtitle">פרטי לקוח</h2>
         <div className="form__group form__group_type_customer">
@@ -84,6 +150,7 @@ const Form = () => {
             label="שם מלא"
             formValues={customerValues.fullName}
             handleChange={handleCustomerChange}
+            validationMessage={errors.fullName}
           />
           <Input
             name="phone"
@@ -91,7 +158,7 @@ const Form = () => {
             label="טלפון"
             formValues={customerValues.phone}
             handleChange={handleCustomerChange}
-            validationMessage={""}
+            validationMessage={errors.phone}
           />
           <div className="form__checkbox">
             <label id="show-address">
@@ -114,12 +181,14 @@ const Form = () => {
                 label="עיר מגורים"
                 formValues={customerValues.city}
                 handleChange={handleCustomerChange}
+                validationMessage={errors.city}
               />
               <Input
                 name="address"
                 label="כתובת למשלוח"
                 formValues={customerValues.address}
                 handleChange={handleCustomerChange}
+                validationMessage={errors.address}
               />
             </>
           )}

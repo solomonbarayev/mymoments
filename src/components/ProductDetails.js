@@ -6,7 +6,10 @@ import { useForm } from "../contexts/FormContext";
 import Input from "./Input";
 import CustomOptions from "./CustomOptions";
 import AntDTextArea from "./AntDTextArea";
+import { useValidation } from "../contexts/FormValidation.js";
+
 const ProductDetails = ({ id }) => {
+  const { errors, itemErrors } = useValidation();
   // const [itemTotalCount, setItemTotalCount] = useState(0);
   const { items, handleItemsChange, handleCustomText } = useForm();
   const item = items.filter((item) => id == item?.id)[0];
@@ -146,8 +149,9 @@ const ProductDetails = ({ id }) => {
               type="tel"
               label="ציין את הכמות הרצויה"
               name="itemCount"
-              handleChange={(e) => handleTotalCount(e)}
+              handleChange={(e) => handleTotalCount(e, id)}
               formValues={itemCount}
+              validationMessage={itemErrors[id]?.itemCount}
             />
           </div>
         </>
@@ -157,6 +161,7 @@ const ProductDetails = ({ id }) => {
         itemCount != undefined &&
         itemCount != "" &&
         category != "כובעים" &&
+        item.fileUploaded &&
         subItems.map((el) => (
           <CustomOptions
             itemId={id}

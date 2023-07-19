@@ -6,62 +6,96 @@ const FormValidationContext = createContext();
 
 export const FormValidationProvider = ({ children }) => {
   const [errors, setError] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
     address: "",
     city: "",
     phone: "",
+    itemCount: "",
   });
+
+  const [itemErrors, setItemError] = useState({});
+  const [subItemErrors, setSubItemError] = useState({});
 
   const handleRequired = (e) => {
     let newState = errors;
 
-    if (e.target.value == "") {
-      newState[e.target.name] = "שדה חובה";
-    }
+    newState[e.target.name] = e.target.value == "" ? "שדה חובה" : "";
     setError(newState);
   };
 
-  const handleTelErr = (e) => {
+  const handleNumInput = (e) => {
+    const { name } = e.target;
     let num = e.target.value.replaceAll("-", "");
     if (num == "") {
       setError({
-        phone: "שדה חובה",
+        [name]: "שדה חובה",
       });
     }
     if (!validateTel.test(num)) {
       setError({
-        phone: "מספרים בלבד",
+        [name]: "מספרים בלבד",
       });
-      return;
-    } else if (num.length != 10) {
+    } else if (num.length != 10 && name == "phone") {
       setError({
-        phone: "לפחות עשר מספרים",
+        [name]: "לפחות עשר מספרים",
       });
       return;
     }
     setError({
-      phone: "",
+      [name]: "",
     });
   };
 
-  const handleValidations = (e) => {
+  function buildNumMessage(value) {
+    let message = "";
+    if (value == "") {
+      message = "שדה חובה";
+    } else if (!validateTel.test(value)) {
+      message = "מספרים בלבד";
+    } else {
+      message = "";
+    }
+    return message;
+  }
+
+  const handleItemErrors = (e, id) => {
+    const { name } = e.target;
+    let newState = itemErrors;
+    newState[id] = {
+      ...newState[id],
+      [name]: buildNumMessage(e.target.value),
+    };
+    setItemError(newState);
+  };
+
+  const handleSubItemErrors = (e, id) => {
+    const { name } = e.target;
+    let newState = subItemErrors;
+    newState[id] = {
+      ...newState[id],
+      [name]: buildNumMessage(e.target.value),
+    };
+    setSubItemError(newState);
+  };
+
+  const handleValidations = (e, id) => {
     const { name } = e.target;
     const validationObject = {
-      phone: handleTelErr,
-      firstName: handleRequired,
-      lastName: handleRequired,
+      phone: handleNumInput,
+      fullName: handleRequired,
       address: handleRequired,
       city: handleRequired,
       email: handleRequired,
+      itemCount: handleItemErrors,
+      subItemCount: handleSubItemErrors,
     };
-    validationObject[name]?.(e);
+    validationObject[name]?.(e, id);
   };
 
   return (
     <FormValidationContext.Provider
-      value={{ errors, handleValidations, handleTelErr, handleRequired }}
+      value={{ errors, handleValidations, itemErrors, subItemErrors }}
     >
       {children}
     </FormValidationContext.Provider>

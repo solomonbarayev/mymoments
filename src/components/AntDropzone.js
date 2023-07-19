@@ -19,7 +19,6 @@ const props = {
 
 function AntDropzone({ itemId, type, typeNum, subType, category }) {
   const { handleFileUpload } = useForm();
-  console.log(category);
   return (
     <div className="form__file-uploader">
       <Dragger
@@ -50,7 +49,12 @@ function AntDropzone({ itemId, type, typeNum, subType, category }) {
             // handleFileUpload(itemId, null, typeNum, subType);
             setTimeout(
               () =>
-                handleFileUpload({ itemId, base64: null, typeNum, subType }),
+                handleFileUpload({
+                  itemId,
+                  base64: null,
+                  type: typeNum,
+                  subType,
+                }),
               300
             );
           }

@@ -1,5 +1,5 @@
 export function createUniqueId() {
-  return Math.floor(Math.random() * 100000);
+  return Math.floor(Math.random() * 10000000000);
 }
 
 export function createEmptyItem(newItemId, newSubItemId = createUniqueId()) {

@@ -13,14 +13,6 @@ const Input = ({
   maxLength,
 }) => {
   return (
-    // <Box
-    //   sx={{
-    //     "& > :not(style)": { m: 0, width: "26ch" },
-    //   }}
-    //   noValidate
-    //   autoComplete="off"
-    // >
-
     <div className="form__input">
       <TextField
         id="outlined-basic"
@@ -34,11 +26,7 @@ const Input = ({
         helperText={validationMessage}
         error={validationMessage != ""}
       />
-      {validationMessage ? (
-        <span className="form__input-validation">{validationMessage}</span>
-      ) : null}
     </div>
-    // </Box>
   );
 };
 

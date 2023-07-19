@@ -4,6 +4,7 @@ import { data } from "../data/data";
 import { useForm } from "../contexts/FormContext";
 import Input from "./Input";
 import { BsDashCircle, BsPlusCircle } from "react-icons/bs";
+import { useValidation } from "../contexts/FormValidation";
 
 const colors = data.colors;
 const sizes = data.sizes;
@@ -19,6 +20,8 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
   function handleSubItemCount(e, subId) {
     handleUpdateSubitem(e, itemId, subId);
   }
+
+  const { subItemErrors } = useValidation();
 
   return (
     <>
@@ -60,6 +63,7 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
               name="subItemCount"
               handleChange={(e) => handleSubItemCount(e, subItemId)}
               formValues={subItem.subItemCount}
+              validationMessage={subItemErrors[subItemId]?.subItemCount}
             />
           </div>
         </div>

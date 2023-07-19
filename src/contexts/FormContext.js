@@ -50,6 +50,8 @@ export const FormProvider = ({ children }) => {
   };
 
   const handleItemsChange = (e, id) => {
+    // handleValidations(e); //enable from useValidation hook
+    handleValidations(e, id);
     dispatch({
       type: "UPDATE_ITEM",
       payload: { id, name: e.target.name, value: e.target.value },
@@ -82,6 +84,7 @@ export const FormProvider = ({ children }) => {
   };
 
   const handleUpdateSubitem = (e, itemId, subItemId) => {
+    handleValidations(e, subItemId); //enable from useValidation hook
     dispatch({
       type: "UPDATE_SUB_ITEM",
       payload: {
@@ -95,7 +98,6 @@ export const FormProvider = ({ children }) => {
 
   const handleCustomerChange = (e) => {
     handleValidations(e); //enable from useValidation hook
-
     dispatch({
       type: "UPDATE_CUSTOMER",
       payload: { name: e.target.name, value: e.target.value },
