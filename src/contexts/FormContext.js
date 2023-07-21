@@ -304,6 +304,13 @@ export const FormProvider = ({ children }) => {
           if (subItemErrorValues.some((el) => el != '')) hasErrors = true;
         }
       });
+
+      //check if subItemCounts match
+      const subItemCount = item.subItems.reduce(
+        (accumulator, next) => accumulator + +next.subItemCount,
+        0
+      );
+      if (subItemCount != item.itemCount) hasErrors = true;
     }
 
     return hasErrors;
