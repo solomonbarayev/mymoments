@@ -80,7 +80,16 @@ const reducer = (state, action) => {
   }
 
   if (action.type === 'UPDATE_SINGLE_SUB_ITEM_ERRORS') {
-    console.log('in UPDATE_SINGLE_SUB_ITEM_ERRORS');
+    const { subItemId, name, value } = action.payload;
+    let newState = state.subItemErrors;
+    newState[subItemId] = {
+      ...newState[subItemId],
+      [name]: value == '' ? 'שדה חובה' : '',
+    };
+    return {
+      ...state,
+      subItemErrors: newState,
+    };
   } else {
     throw new Error(`No Matching "${action.type}" - action type`);
   }
