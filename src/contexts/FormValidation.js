@@ -1,83 +1,68 @@
 //form validation useValidation hook
-import { createContext, useContext, useState, useEffect } from "react";
-import { validateTel } from "../constants/constants";
+import { createContext, useContext, useState, useReducer } from 'react';
+import reducer from '../reducers/ValidatonsReducer';
+import { validateTel } from '../constants/constants';
 
 const FormValidationContext = createContext();
 
 export const FormValidationProvider = ({ children }) => {
-  const [errors, setError] = useState({
-    fullName: "",
-    email: "",
-    address: "",
-    city: "",
-    phone: "",
-    itemCount: "",
+  const [state, dispatch] = useReducer(reducer, {
+    formErrors: {},
+    itemErrors: {},
+    subItemErrors: {},
   });
 
-  const [itemErrors, setItemError] = useState({});
-  const [subItemErrors, setSubItemError] = useState({});
-
   const handleRequired = (e) => {
-    let newState = errors;
-
-    newState[e.target.name] = e.target.value == "" ? "שדה חובה" : "";
-    setError(newState);
-  };
-
-  const handleNumInput = (e) => {
-    const { name } = e.target;
-    let num = e.target.value.replaceAll("-", "");
-    if (num == "") {
-      setError({
-        [name]: "שדה חובה",
-      });
-    }
-    if (!validateTel.test(num)) {
-      setError({
-        [name]: "מספרים בלבד",
-      });
-    } else if (num.length != 10 && name == "phone") {
-      setError({
-        [name]: "לפחות עשר מספרים",
-      });
-      return;
-    }
-    setError({
-      [name]: "",
+    dispatch({
+      type: 'REQUIRED_FIELD',
+      payload: { name: e.target.name, value: e.target.value },
     });
   };
 
-  function buildNumMessage(value) {
-    let message = "";
-    if (value == "") {
-      message = "שדה חובה";
-    } else if (!validateTel.test(value)) {
-      message = "מספרים בלבד";
-    } else {
-      message = "";
-    }
-    return message;
-  }
+  const handleNumInput = (e) => {
+    dispatch({
+      type: 'TEL_ERROR',
+      payload: { name: e.target.name, value: e.target.value },
+    });
+  };
 
   const handleItemErrors = (e, id) => {
-    const { name } = e.target;
-    let newState = itemErrors;
-    newState[id] = {
-      ...newState[id],
-      [name]: buildNumMessage(e.target.value),
-    };
-    setItemError(newState);
+    dispatch({
+      type: 'UPDATE_ITEM_ERRORS',
+      payload: {
+        id,
+        name: e.target.name,
+        value: e.target.value,
+        type: 'itemErrors',
+      },
+    });
   };
 
   const handleSubItemErrors = (e, id) => {
-    const { name } = e.target;
-    let newState = subItemErrors;
-    newState[id] = {
-      ...newState[id],
-      [name]: buildNumMessage(e.target.value),
-    };
-    setSubItemError(newState);
+    dispatch({
+      type: 'UPDATE_ITEM_ERRORS',
+      payload: {
+        id,
+        name: e.target.name,
+        value: e.target.value,
+        type: 'subItemErrors',
+      },
+    });
   };
+
+  function updateSubItemErrors(newState) {
+    dispatch({
+      type: 'UPDATE_SUB_ITEM_ERRORS',
+      payload: newState,
+    });
+  }
+
+  function handleSubItemError(subItemId, name, value) {
+    dispatch({
+      type: 'UPDATE_SINGLE_SUB_ITEM_ERRORS',
+      payload: { subItemId, name, value },
+    });
+  }
 
   const handleValidations = (e, id) => {
     const { name } = e.target;
@@ -95,8 +80,15 @@ export const FormValidationProvider = ({ children }) => {
 
   return (
     <FormValidationContext.Provider
-      value={{ errors, handleValidations, itemErrors, subItemErrors }}
-    >
+      value={{
+        errors: state.formErrors,
+        handleValidations,
+        itemErrors: state.itemErrors,
+        subItemErrors: state.subItemErrors,
+        // setSubItemError,
+        updateSubItemErrors,
+        handleSubItemError,
+      }}>
       {children}
     </FormValidationContext.Provider>
   );

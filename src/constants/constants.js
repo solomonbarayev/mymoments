@@ -1,5 +1,5 @@
 export function createUniqueId() {
-  return Math.floor(Math.random() * 10000000000);
+  return Math.floor(Math.random() * 100000);
 }
 
 export function createEmptyItem(newItemId, newSubItemId = createUniqueId()) {
@@ -12,19 +12,19 @@ export function createEmptyItem(newItemId, newSubItemId = createUniqueId()) {
         subItemCount: 0,
       },
     ],
-    typeOfPrint: "",
+    typeOfPrint: '',
     fileUploaded: false,
     prints: {
       frontPrint: {
-        printSize: "",
-        file: "",
+        printSize: '',
+        file: '',
       },
       backPrint: {
-        printSize: "",
-        file: "",
+        printSize: '',
+        file: '',
       },
       noPrint: {
-        text: "",
+        text: '',
       },
     },
   };
@@ -35,14 +35,14 @@ export const initialState = {
   customerData: {},
   shipping: false,
   totalPrice: 0,
-  orderNotes: "",
+  orderNotes: '',
 };
 
-export const printSizes = ["סמל קטן (כיס 8 סמ)", "(A4)סמל גדול"];
+export const printSizes = ['סמל קטן (כיס 8 סמ)', '(A4)סמל גדול'];
 export const printTypes = [
-  "בחירת קובץ להדפס קידמי",
-  "בחירת קובץ להדפס אחורי",
-  "הדפסה ללא בחירת קובץ",
+  'בחירת קובץ להדפס קידמי',
+  'בחירת קובץ להדפס אחורי',
+  'הדפסה ללא בחירת קובץ',
 ];
 
 export const validateTel = /^[0-9]*$/;

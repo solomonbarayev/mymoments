@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import Dropdown from "./Dropdown";
-import { data } from "../data/data";
-import { useForm } from "../contexts/FormContext";
-import Input from "./Input";
-import { BsDashCircle, BsPlusCircle } from "react-icons/bs";
-import { useValidation } from "../contexts/FormValidation";
+import React, { useState } from 'react';
+import Dropdown from './Dropdown';
+import { data } from '../data/data';
+import { useForm } from '../contexts/FormContext';
+import Input from './Input';
+import { BsDashCircle, BsPlusCircle } from 'react-icons/bs';
+import { useValidation } from '../contexts/FormValidation';
 
 const colors = data.colors;
 const sizes = data.sizes;
 
 const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
-  const useColors = itemCount > 10 ? colors : ["שחור", "לבן"];
+  const useColors = itemCount > 10 ? colors : ['שחור', 'לבן'];
   const { items, handleUpdateSubitem, handleAddSubItem, handleRemoveSubItem } =
     useForm();
   const item = items.filter((item) => itemId == item.id)[0];
@@ -31,9 +31,8 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
             <button
               type="button"
               className="form__sub-item-btn form__sub-item-btn_type_remove"
-              onClick={() => handleRemoveSubItem(itemId, subItemId)}
-            >
-              <BsDashCircle style={{ color: "rgb(181 52 52)" }} size={20} />
+              onClick={() => handleRemoveSubItem(itemId, subItemId)}>
+              <BsDashCircle style={{ color: 'rgb(181 52 52)' }} size={20} />
             </button>
           )}
         </div>
@@ -45,6 +44,7 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
               label="מידה"
               formValues={subItem.size}
               handleChange={(e) => handleUpdateSubitem(e, itemId, subItemId)}
+              validationMessage={subItemErrors[subItemId]?.size}
             />
           </div>
           <div className="options__panel options__panel_side_right">
@@ -54,6 +54,7 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
               label="צבע"
               formValues={subItem.color}
               handleChange={(e) => handleUpdateSubitem(e, itemId, subItemId)}
+              validationMessage={subItemErrors[subItemId]?.color}
             />
           </div>
           <div className="options__panel options__panel_side_center">
@@ -77,10 +78,9 @@ const CustomOptions = ({ itemCount, itemId, subItemId, subItem }) => {
             onClick={(e) => {
               e.preventDefault();
               handleAddSubItem(itemId);
-            }}
-          >
+            }}>
             הוסף מידות/צבעים
-            <BsPlusCircle style={{ color: "#19448b" }} size={20} />
+            <BsPlusCircle style={{ color: '#19448b' }} size={20} />
           </button>
         </div>
       ) : null}

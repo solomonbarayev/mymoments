@@ -1,21 +1,20 @@
 // const React, {createContext, useContext} = require('react');
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useReducer,
-} from "react";
-import reducer from "../reducers/reducer";
-import { initialState, createUniqueId } from "../constants/constants";
-import { useValidation } from "./FormValidation";
+import React, { createContext, useContext, useState, useReducer } from 'react';
+import reducer from '../reducers/FormReducer';
+import { initialState, createUniqueId } from '../constants/constants';
+import { useValidation } from './FormValidation';
 
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { handleValidations } = useValidation();
+  const {
+    handleValidations,
+    updateSubItemErrors,
+    subItemErrors,
+    handleSubItemError,
+  } = useValidation();
 
   console.log(state);
 
@@ -30,18 +29,18 @@ export const FormProvider = ({ children }) => {
 
   const addItem = () => {
     dispatch({
-      type: "ADD_ITEM",
+      type: 'ADD_ITEM',
       payload: { itemId: createUniqueId(), subItemId: createUniqueId() },
     });
   };
 
   const removeItem = (id) => {
-    dispatch({ type: "REMOVE_ITEM", payload: id });
+    dispatch({ type: 'REMOVE_ITEM', payload: id });
   };
 
   const handleTypeOfPrint = (itemId, alignment) => {
     dispatch({
-      type: "UPDATE_PRINT_TYPE",
+      type: 'UPDATE_PRINT_TYPE',
       payload: {
         itemId,
         value: alignment,
@@ -53,14 +52,14 @@ export const FormProvider = ({ children }) => {
     // handleValidations(e); //enable from useValidation hook
     handleValidations(e, id);
     dispatch({
-      type: "UPDATE_ITEM",
+      type: 'UPDATE_ITEM',
       payload: { id, name: e.target.name, value: e.target.value },
     });
   };
 
   const handleShippingChange = (shipping) => {
     dispatch({
-      type: "UPDATE_SHIPPING",
+      type: 'UPDATE_SHIPPING',
       payload: shipping,
     });
   };
@@ -68,7 +67,7 @@ export const FormProvider = ({ children }) => {
   const handleAddSubItem = (itemId) => {
     const subItemId = createUniqueId();
     dispatch({
-      type: "ADD_SUB_ITEM",
+      type: 'ADD_SUB_ITEM',
       payload: {
         itemId,
         value: { subItemId, subItemCount: 0 },
@@ -78,15 +77,17 @@ export const FormProvider = ({ children }) => {
 
   const handleRemoveSubItem = (itemId, subItemId) => {
     dispatch({
-      type: "REMOVE_SUB_ITEM",
+      type: 'REMOVE_SUB_ITEM',
       payload: { itemId, subItemId },
     });
   };
 
   const handleUpdateSubitem = (e, itemId, subItemId) => {
     handleValidations(e, subItemId); //enable from useValidation hook
+    handleSubItemError(subItemId, e.target.name, e.target.value);
+
     dispatch({
-      type: "UPDATE_SUB_ITEM",
+      type: 'UPDATE_SUB_ITEM',
       payload: {
         itemId,
         subItemId,
@@ -99,7 +100,7 @@ export const FormProvider = ({ children }) => {
   const handleCustomerChange = (e) => {
     handleValidations(e); //enable from useValidation hook
     dispatch({
-      type: "UPDATE_CUSTOMER",
+      type: 'UPDATE_CUSTOMER',
       payload: { name: e.target.name, value: e.target.value },
     });
   };
@@ -114,7 +115,7 @@ export const FormProvider = ({ children }) => {
     category,
   }) => {
     dispatch({
-      type: "UPDATE_FILE",
+      type: 'UPDATE_FILE',
       payload: {
         itemId,
         value: base64,
@@ -131,20 +132,19 @@ export const FormProvider = ({ children }) => {
 
   const handleCategoryUpdate = (e, id, category) => {
     dispatch({
-      type: "UPDATE_ITEM",
-      payload: { name: "category", id, value: category },
+      type: 'UPDATE_ITEM',
+      payload: { name: 'category', id, value: category },
     });
   };
 
   function handleUpdateOrderNotes(text) {
-    console.log("in here");
-    dispatch({ type: "UPDATE_ORDER_NOTES", payload: text });
+    console.log('in here');
+    dispatch({ type: 'UPDATE_ORDER_NOTES', payload: text });
   }
 
   function handleCustomText(text, itemId) {
-    console.log("in here", "text: " + text);
     dispatch({
-      type: "UPDATE_FILE",
+      type: 'UPDATE_FILE',
       payload: {
         itemId,
         printType: 4,
@@ -155,9 +155,111 @@ export const FormProvider = ({ children }) => {
 
   function handleRemoveAllFiles(itemId) {
     dispatch({
-      type: "REMOVE_ALL_FILES",
+      type: 'REMOVE_ALL_FILES',
       payload: { itemId },
     });
+  }
+
+  function checkCategoryForEach() {
+    return itemValues.every(
+      (item) => item.category != undefined && item.category != ''
+    );
+  }
+
+  function checkTypeOfPrintForEach() {
+    return itemValues.every(
+      (item) => item.typeOfPrint != undefined && item.typeOfPrint != ''
+    );
+  }
+
+  function checkAllSubItemSizeAndColor() {
+    //if there is an error, then add error with proper key name to subItemErrors object
+    itemValues.forEach((item) =>
+      item.subItems.forEach((subItem) => {
+        console.log('yo');
+        if (
+          subItem.size != undefined &&
+          subItem.size != '' &&
+          subItem.color != undefined &&
+          subItem.color != '' &&
+          subItem.subItemCount != undefined &&
+          subItem.subItemCount != ''
+        ) {
+          //clean up subItemErrors object
+          const newSubItemErrors = {
+            ...subItemErrors,
+            [subItem.subItemId]: {
+              ...subItemErrors[subItem?.subItemId],
+              size: '',
+              color: '',
+            },
+          };
+          updateSubItemErrors(newSubItemErrors);
+          // return true;
+        } else {
+          //add error to subItemErrors object
+          const newSubItemErrors = {
+            ...subItemErrors,
+            [subItem.subItemId]: {
+              ...subItemErrors[subItem?.subItemId],
+              size:
+                subItem.size == undefined || subItem.size == ''
+                  ? 'חובה לבחור מידה'
+                  : '',
+              color:
+                subItem.color == undefined || subItem.color == ''
+                  ? 'חובה לבחור צבע'
+                  : '',
+              subItemCount:
+                subItem.subItemCount == undefined || subItem.subItemCount == ''
+                  ? 'שדה חובה'
+                  : '',
+            },
+          };
+          updateSubItemErrors(newSubItemErrors);
+          // return false;
+        }
+      })
+    );
+  }
+
+  function checkThatPrintHasSizeSelected() {
+    return itemValues.every((item) => {
+      if (item.typeOfPrint == 'exclude') return true;
+      else {
+        const front = item.prints.frontPrint;
+        const back = item.prints.backPrint;
+        let result = false;
+        if (front.file !== '') {
+          result = front.printSize !== '';
+        }
+        if (back.file !== '') {
+          result = back.printSize !== '';
+        }
+        return result;
+      }
+    });
+  }
+
+  function checkInnerErrorsObjEmpty(errObj) {
+    let result = true;
+    if (JSON.stringify(errObj) == '{}') return result;
+    else {
+      const keys = Object.keys(errObj);
+      keys.forEach((key) => {
+        const innerKeys = Object.keys(errObj[key]);
+        innerKeys.forEach((innerKey) => {
+          if (errObj[key][innerKey] != '' && errObj[key][innerKey] != undefined)
+            result = false;
+        });
+      });
+      return result;
+    }
+  }
+
+  function checkOuterErrorsObjEmpty(errObj) {
+    console.log(errObj);
+    return Object.values(errObj).every((el) => el == '' || el == undefined);
   }
 
   return (
@@ -183,8 +285,13 @@ export const FormProvider = ({ children }) => {
         handleCustomText,
         handleRemoveAllFiles,
         handleShippingChange,
-      }}
-    >
+        checkCategoryForEach,
+        checkTypeOfPrintForEach,
+        checkAllSubItemSizeAndColor,
+        checkThatPrintHasSizeSelected,
+        checkInnerErrorsObjEmpty,
+        checkOuterErrorsObjEmpty,
+      }}>
       {children}
     </FormContext.Provider>
   );
