@@ -33,6 +33,7 @@ const Form = () => {
     checkThatPrintHasSizeSelected,
     checkInnerErrorsObjEmpty,
     checkOuterErrorsObjEmpty,
+    validateSubitemCountMatches,
   } = useForm();
   const [expanded, setExpanded] = useState(itemsIds[0]);
 
@@ -79,26 +80,17 @@ const Form = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    //check all the items have a category
-    const result =
-      // checkCategoryForEach() &&
-      // checkTypeOfPrintForEach() &&
-      // checkThatPrintHasSizeSelected() &&
-      checkAllSubItemSizeAndColor() &&
-      checkInnerErrorsObjEmpty(itemErrors) &&
-      checkInnerErrorsObjEmpty(subItemErrors) &&
-      checkOuterErrorsObjEmpty(errors);
+    let result =
+      checkCategoryForEach() *
+      checkTypeOfPrintForEach() *
+      checkThatPrintHasSizeSelected() *
+      checkAllSubItemSizeAndColor() *
+      checkInnerErrorsObjEmpty(itemErrors) *
+      checkInnerErrorsObjEmpty(subItemErrors) *
+      checkOuterErrorsObjEmpty(errors) *
+      validateSubitemCountMatches();
 
-    console.log(result ? 'form submitted' : 'form not submitted');
-
-    //check all the items have a typeOfPrint
-    //check all the item have a size selected from radio buttons
-    //check the itemErrors object is empty
-    //check that subItems have a size and color
-    //if not then add error to subItemErrors object (refactor function to do this)
-    //check the subItemErrors object is empty
-    //check the errors object is empty
-    //if all the above are true, then submit the form (fetch to server)
+    console.log(result === 1 ? 'form submitted' : 'form not submitted');
   }
 
   return (

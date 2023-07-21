@@ -174,6 +174,7 @@ export const FormProvider = ({ children }) => {
 
   function checkAllSubItemSizeAndColor() {
     //if there is an error, then add error with proper key name to subItemErrors object
+    let result = true;
     itemValues.forEach((item) =>
       item.subItems.forEach((subItem) => {
         console.log('yo');
@@ -218,9 +219,11 @@ export const FormProvider = ({ children }) => {
           };
           updateSubItemErrors(newSubItemErrors);
           // return false;
+          result = false;
         }
       })
     );
+    return result;
   }
 
   function checkThatPrintHasSizeSelected() {
@@ -262,6 +265,16 @@ export const FormProvider = ({ children }) => {
     return Object.values(errObj).every((el) => el == '' || el == undefined);
   }
 
+  function validateSubitemCountMatches() {
+    return itemValues.every((item) => {
+      const subItemCount = item.subItems.reduce(
+        (accumulator, next) => accumulator + +next.subItemCount,
+        0
+      );
+      return subItemCount == item.itemCount;
+    });
+  }
+
   return (
     <FormContext.Provider
       value={{
@@ -291,6 +304,7 @@ export const FormProvider = ({ children }) => {
         checkThatPrintHasSizeSelected,
         checkInnerErrorsObjEmpty,
         checkOuterErrorsObjEmpty,
+        validateSubitemCountMatches,
       }}>
       {children}
     </FormContext.Provider>
