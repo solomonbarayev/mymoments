@@ -1,7 +1,6 @@
 //form validation useValidation hook
 import { createContext, useContext, useState, useReducer } from 'react';
 import reducer from '../reducers/ValidatonsReducer';
-import { validateTel } from '../constants/constants';
 
 const FormValidationContext = createContext();
 
@@ -88,6 +87,7 @@ export const FormValidationProvider = ({ children }) => {
         // setSubItemError,
         updateSubItemErrors,
         handleSubItemError,
+        handleItemErrors,
       }}>
       {children}
     </FormValidationContext.Provider>

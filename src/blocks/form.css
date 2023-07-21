@@ -274,3 +274,9 @@
     width: 100%;
   }
 }
+
+.form__item-error {
+  color: red;
+  font-size: 14px;
+  font-weight: bold;
+}

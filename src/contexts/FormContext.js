@@ -12,8 +12,10 @@ export const FormProvider = ({ children }) => {
   const {
     handleValidations,
     updateSubItemErrors,
+    itemErrors,
     subItemErrors,
     handleSubItemError,
+    handleItemErrors,
   } = useValidation();
 
   console.log(state);
@@ -239,6 +241,15 @@ export const FormProvider = ({ children }) => {
         if (back.file !== '') {
           result = back.printSize !== '';
         }
+        const event = {
+          target: {
+            name: 'printSize',
+            value: 'חובה לבחור מידת הדפסה',
+          },
+        };
+        console.log('in checkThatPrintHasSizeSelected');
+        console.log(event);
+        result == false && handleItemErrors(event, item.id);
         return result;
       }
     });
@@ -275,10 +286,34 @@ export const FormProvider = ({ children }) => {
     });
   }
 
+  function checkIfAnyErrors(itemId) {
+    const item = itemValues.find((el) => el.id == itemId);
+    const subItems = item.subItems.map((el) => el.subItemId);
+
+    let hasErrors = false;
+
+    if (itemErrors[itemId] != undefined) {
+      const itemErrorValues = Object.values(itemErrors[itemId]);
+      if (itemErrorValues.some((el) => el != '')) hasErrors = true;
+    }
+
+    if (subItems.length > 0) {
+      subItems.forEach((subItemId) => {
+        if (subItemErrors[subItemId] != undefined) {
+          const subItemErrorValues = Object.values(subItemErrors[subItemId]);
+          if (subItemErrorValues.some((el) => el != '')) hasErrors = true;
+        }
+      });
+    }
+
+    return hasErrors;
+  }
+
   return (
     <FormContext.Provider
       value={{
         handleCustomerChange,
+        checkIfAnyErrors,
         handleItemsChange,
         customerValues,
         handleFileUpload,

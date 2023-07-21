@@ -6,6 +6,7 @@ export function createEmptyItem(newItemId, newSubItemId = createUniqueId()) {
   return {
     id: newItemId || createUniqueId(),
     itemCount: 0,
+    hasErrors: false,
     subItems: [
       {
         subItemId: newSubItemId,

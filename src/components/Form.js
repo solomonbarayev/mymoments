@@ -34,6 +34,7 @@ const Form = () => {
     checkInnerErrorsObjEmpty,
     checkOuterErrorsObjEmpty,
     validateSubitemCountMatches,
+    checkIfAnyErrors,
   } = useForm();
   const [expanded, setExpanded] = useState(itemsIds[0]);
 
@@ -178,10 +179,16 @@ const Form = () => {
                     lineHeight: '1.7em',
                     flexGrow: 1,
                     textAlign: 'left',
+                    display: 'flex',
+                    gap: '10px',
                   }}
                   className="form__subtitle">
                   פריט {i + 1}
+                  <span className="form__item-error">
+                    {checkIfAnyErrors(el) && 'ישנם שדות לא תקינים בפריט זה'}
+                  </span>
                 </Typography>
+
                 {itemsIds.length == 1 ? null : (
                   <button
                     type="button"
