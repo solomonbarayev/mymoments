@@ -84,10 +84,10 @@ export const FormValidationProvider = ({ children }) => {
         handleValidations,
         itemErrors: state.itemErrors,
         subItemErrors: state.subItemErrors,
-        // setSubItemError,
         updateSubItemErrors,
         handleSubItemError,
         handleItemErrors,
+        handleRequired,
       }}>
       {children}
     </FormValidationContext.Provider>

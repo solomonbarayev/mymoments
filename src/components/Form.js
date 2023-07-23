@@ -34,7 +34,9 @@ const Form = () => {
     checkInnerErrorsObjEmpty,
     checkOuterErrorsObjEmpty,
     validateSubitemCountMatches,
+    checkIfCustomerDetailsFilled,
     checkIfAnyErrors,
+    checkFilesUploaded,
   } = useForm();
   const [expanded, setExpanded] = useState(itemsIds[0]);
 
@@ -82,7 +84,9 @@ const Form = () => {
     e.preventDefault();
 
     let result =
+      checkIfCustomerDetailsFilled() *
       checkCategoryForEach() *
+      checkFilesUploaded() *
       checkTypeOfPrintForEach() *
       checkThatPrintHasSizeSelected() *
       checkAllSubItemSizeAndColor() *

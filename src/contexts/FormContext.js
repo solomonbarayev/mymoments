@@ -16,6 +16,7 @@ export const FormProvider = ({ children }) => {
     subItemErrors,
     handleSubItemError,
     handleItemErrors,
+    handleRequired,
   } = useValidation();
 
   console.log(state);
@@ -25,6 +26,7 @@ export const FormProvider = ({ children }) => {
     items: itemValues,
     totalPrice,
     customerData: customerValues,
+    shipping,
   } = state;
 
   const [price, setPrice] = useState(0);
@@ -130,6 +132,16 @@ export const FormProvider = ({ children }) => {
         printSize,
       },
     });
+
+    handleItemErrors(
+      {
+        target: {
+          name: 'fileUploaded',
+          value: '',
+        },
+      },
+      itemId
+    );
   };
 
   const handleCategoryUpdate = (e, id, category) => {
@@ -137,6 +149,16 @@ export const FormProvider = ({ children }) => {
       type: 'UPDATE_ITEM',
       payload: { name: 'category', id, value: category },
     });
+
+    handleItemErrors(
+      {
+        target: {
+          name: 'category',
+          value: '',
+        },
+      },
+      id
+    );
   };
 
   function handleUpdateOrderNotes(text) {
@@ -169,9 +191,26 @@ export const FormProvider = ({ children }) => {
   }
 
   function checkTypeOfPrintForEach() {
-    return itemValues.every(
-      (item) => item.typeOfPrint != undefined && item.typeOfPrint != ''
-    );
+    // return itemValues.every(
+    //   (item) => item.typeOfPrint != undefined && item.typeOfPrint != ''
+    // );
+    //if no cateogry picked for an item, enter into that itemError object the error message
+
+    let result = true;
+
+    itemValues.forEach((item) => {
+      if (item.category == undefined || item.category == '') {
+        const event = {
+          target: {
+            name: 'category',
+            value: 'חובה לבחור קטגוריה',
+          },
+        };
+        handleItemErrors(event, item.id);
+        result = false;
+      }
+    });
+    return result;
   }
 
   function checkAllSubItemSizeAndColor() {
@@ -179,7 +218,6 @@ export const FormProvider = ({ children }) => {
     let result = true;
     itemValues.forEach((item) =>
       item.subItems.forEach((subItem) => {
-        console.log('yo');
         if (
           subItem.size != undefined &&
           subItem.size != '' &&
@@ -310,10 +348,70 @@ export const FormProvider = ({ children }) => {
         (accumulator, next) => accumulator + +next.subItemCount,
         0
       );
-      if (subItemCount != item.itemCount) hasErrors = true;
+      if (subItemCount > item.itemCount) hasErrors = true;
     }
 
     return hasErrors;
+  }
+
+  function checkIfCustomerDetailsFilled() {
+    let result = true;
+    if (!shipping) {
+      result = customerValues.fullName != '' && customerValues.phone != '';
+    } else {
+      result = Object.values(customerValues).every((el) => el != '');
+    }
+
+    if (result == false) {
+      Object.keys(customerValues).forEach((key) => {
+        console.log(customerValues[key]);
+        if (customerValues[key] == '') {
+          handleRequired({ target: { name: key, value: customerValues[key] } });
+        }
+      });
+    }
+
+    return result;
+  }
+
+  function checkFilesUploaded() {
+    let result = true;
+    itemValues.forEach((item) => {
+      let typeOfPrint = item.typeOfPrint;
+
+      if (typeOfPrint == 'front') {
+        if (item.prints.frontPrint.file == '') {
+          result = false;
+        }
+      }
+      if (typeOfPrint == 'back') {
+        if (item.prints.backPrint.file == '') {
+          result = false;
+        }
+      }
+      if (typeOfPrint == 'doubleSided') {
+        if (
+          item.prints.frontPrint.file == '' ||
+          item.prints.backPrint.file == ''
+        ) {
+          result = false;
+        }
+      }
+      if (typeOfPrint == 'exclude') {
+        if (item.prints.noPrint.text == '') result = false;
+      }
+
+      if (result == false) {
+        handleItemErrors(
+          {
+            target: { name: 'fileUploaded', value: 'חובה להעלות תוכן להדפסה' },
+          },
+          item.id
+        );
+      }
+    });
+
+    return result;
   }
 
   return (
@@ -347,6 +445,8 @@ export const FormProvider = ({ children }) => {
         checkInnerErrorsObjEmpty,
         checkOuterErrorsObjEmpty,
         validateSubitemCountMatches,
+        checkIfCustomerDetailsFilled,
+        checkFilesUploaded,
       }}>
       {children}
     </FormContext.Provider>

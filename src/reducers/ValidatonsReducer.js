@@ -62,7 +62,10 @@ const reducer = (state, action) => {
     let newState = state[type];
     newState[id] = {
       ...newState[id],
-      [name]: name != 'printSize' ? buildNumMessage(value) : value,
+      [name]:
+        name != 'printSize' && name != 'category' && name != 'fileUploaded'
+          ? buildNumMessage(value)
+          : value,
     };
     return {
       ...state,

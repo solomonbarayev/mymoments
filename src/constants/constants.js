@@ -33,7 +33,12 @@ export function createEmptyItem(newItemId, newSubItemId = createUniqueId()) {
 
 export const initialState = {
   items: [createEmptyItem()],
-  customerData: {},
+  customerData: {
+    fullName: '',
+    phone: '',
+    address: '',
+    city: '',
+  },
   shipping: false,
   totalPrice: 0,
   orderNotes: '',
