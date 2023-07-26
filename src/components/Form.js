@@ -19,6 +19,7 @@ const Form = () => {
   const { errors, itemErrors, subItemErrors } = useValidation();
 
   const {
+    state,
     itemValues,
     customerValues,
     handleCustomerChange,
@@ -95,7 +96,24 @@ const Form = () => {
       checkOuterErrorsObjEmpty(errors) *
       validateSubitemCountMatches();
 
-    console.log(result === 1 ? 'form submitted' : 'form not submitted');
+    if (result === 1) {
+      fetch('http://localhost:5000/api/prints', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customer: customerValues,
+          items: itemValues,
+          orderNotes: state.orderNotes,
+          shipping: state.shipping,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    } else {
+      console.log('errors in the form');
+    }
   }
 
   return (

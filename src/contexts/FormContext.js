@@ -417,6 +417,7 @@ export const FormProvider = ({ children }) => {
   return (
     <FormContext.Provider
       value={{
+        state,
         handleCustomerChange,
         checkIfAnyErrors,
         handleItemsChange,
